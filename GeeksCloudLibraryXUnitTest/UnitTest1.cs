@@ -108,7 +108,7 @@ namespace GeeksCloudLibraryXUnitTest
 
             var cloudServiceOperation2 = 
                 (ICouldServiceOperation<IDatabaseServer>)new CloudServiceOperation<IDatabaseServer> (co2);
-            infrastructuresList.Add (cloudServiceOperation1.InitializeAsync ());
+            infrastructuresList.Add (cloudServiceOperation2.InitializeAsync ());
             #endregion
 
             await Task.WhenAll (infrastructuresList);
