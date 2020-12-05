@@ -2,14 +2,14 @@
 
 namespace GeeksCloudLibrary.Operations.Interfaces
 {
-    public interface ICouldServiceOperation
+    public interface ICouldServiceOperation<T>
     {
-        Task<ICloudService> InitializeAsync();
+        Task<ICloudService<T>> InitializeAsync();
 
-        Task<ICloudService> UpdateAsync(ICloudService updatedCloudService);
+        Task<ICloudService<T>> UpdateAsync(ICloudService<T> updatedCloudService);
 
         Task<bool> DeleteAsync(string infraName);
 
-        Task<ICloudService> LoadAsync(string infraName);
+        Task<ICloudService<T>> LoadAsync(string infraName);
     }
 }

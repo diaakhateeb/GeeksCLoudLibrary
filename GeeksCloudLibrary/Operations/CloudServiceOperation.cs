@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace GeeksCloudLibrary.Operations
 {
-    public class CloudServiceOperation : ICouldServiceOperation
+    public class CloudServiceOperation<T> : ICouldServiceOperation<T>
     {
-        private readonly ICloudService _cloudService;
+        private readonly ICloudService<T> _cloudService;
 
-        public CloudServiceOperation(ICloudService cloudService)
+        public CloudServiceOperation(ICloudService<T> cloudService)
         {
             _cloudService = cloudService;
         }
 
-        public async Task<ICloudService> InitializeAsync()
+        public async Task<ICloudService<T>> InitializeAsync()
         {
             var config = new
             {
@@ -26,22 +26,20 @@ namespace GeeksCloudLibrary.Operations
             };
 
             return await Task.Run (() =>
-             {
-                 var config2 = JsonConvert.SerializeObject (config);
-                 var jsonPath = Path.Combine (@"c:\",
-                                              _cloudService.Provider.Name,
-                                              _cloudService.Infrastructure.Name,
-                                              _cloudService.ResourceInstance.Name);
-                 Directory.CreateDirectory (jsonPath);
-                 File.WriteAllText (jsonPath + @"\" + _cloudService.ResourceFile.Name, config2);
+            {
+                var config2 = JsonConvert.SerializeObject (config);
+                var jsonPath = Path.Combine (@"c:\",
+                    _cloudService.Provider.Name,
+                    _cloudService.Infrastructure.Name,
+                    _cloudService.ResourceInstance.Name);
+                Directory.CreateDirectory (jsonPath);
+                File.WriteAllText (jsonPath + @"\" + _cloudService.ResourceFile.Name, config2);
 
-                 return _cloudService;
-             });
-
-
+                return _cloudService;
+            });
         }
 
-        public Task<ICloudService> UpdateAsync(ICloudService updatedCloudService)
+        public Task<ICloudService<T>> UpdateAsync(ICloudService<T> updatedCloudService)
         {
             throw new NotImplementedException ();
         }
@@ -51,7 +49,7 @@ namespace GeeksCloudLibrary.Operations
             throw new NotImplementedException ();
         }
 
-        public Task<ICloudService> LoadAsync(string infraName)
+        public Task<ICloudService<T>> LoadAsync(string infraName)
         {
             throw new NotImplementedException ();
         }
