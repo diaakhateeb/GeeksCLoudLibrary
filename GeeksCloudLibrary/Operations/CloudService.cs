@@ -1,7 +1,7 @@
 ﻿using GeeksCloudLibrary.Infrastructure.Interfaces;
 using GeeksCloudLibrary.Operations.Interfaces;
 using GeeksCloudLibrary.Providers.Interfaces;
-using GeeksCloudLibrary.Resource.Specs.Interfaces;
+using GeeksCloudLibrary.Resource.Interfaces;
 using GeeksCloudLibrary.ResourceFile.Interfaces;
 using GeeksCloudLibrary.ResourceInstance.Interfaces;
 
