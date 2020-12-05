@@ -53,6 +53,7 @@ namespace GeeksCloudLibraryXUnitTest
                     {
                         OperatingSystem = new WindowsOperatingSystem
                         {
+                            Name = "Windows Server 2016 R2",
                             Version = 10,
                             Vendor = "Microsoft",
                             Architecture = OperatingSystemArchitecture.SixtyFour
@@ -106,6 +107,7 @@ namespace GeeksCloudLibraryXUnitTest
                     {
                         OperatingSystem = new LinuxOperatingSystem
                         {
+                            Name = "Linux Ubuntu",
                             Version = 14,
                             Vendor = "Ubuntu",
                             Architecture = OperatingSystemArchitecture.SixtyFour

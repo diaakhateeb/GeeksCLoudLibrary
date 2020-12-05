@@ -8,5 +8,6 @@ namespace GeeksCloudLibrary.Resource.VirtualMachine.OperatingSystem
         public int Version { get; set; }
         public OperatingSystemArchitecture Architecture { get; set; }
         public string Vendor { get; set; }
+        public string Name { get; set; }
     }
 }

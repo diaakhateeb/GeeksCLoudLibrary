@@ -1,6 +1,6 @@
-﻿using GeeksCloudLibrary.ResourceFile.Interfaces;
+﻿using GeeksCloudLibrary.Resource.Interfaces;
+using GeeksCloudLibrary.ResourceFile.Interfaces;
 using System;
-using GeeksCloudLibrary.Resource.Interfaces;
 
 namespace GeeksCloudLibrary.ResourceFile
 {
@@ -9,6 +9,5 @@ namespace GeeksCloudLibrary.ResourceFile
     {
         public string Name { get; set; }
         public T Content { get; set; }
-        public string Path { get; set; }
     }
 }
