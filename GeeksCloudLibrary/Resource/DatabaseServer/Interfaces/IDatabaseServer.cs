@@ -2,10 +2,11 @@
 using GeeksCloudLibrary.Resource.Specs.Memory.Interfaces;
 using GeeksCloudLibrary.Resource.Specs.NetworkPerformance.Enum;
 using GeeksCloudLibrary.Resource.Specs.Storage.Interfaces;
+using GeeksCloudLibrary.Shared.Interfaces;
 
 namespace GeeksCloudLibrary.Resource.DatabaseServer.Interfaces
 {
-    public interface IDatabaseServer
+    public interface IDatabaseServer : IResourceName
     {
         int Version { get; set; }
         string Vendor { get; set; }

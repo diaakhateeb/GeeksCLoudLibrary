@@ -10,6 +10,7 @@ namespace GeeksCloudLibrary.Resource.VirtualMachine
 {
     public class VirtualMachine : IVirtualMachine
     {
+        public string Name { get; set; }
         public IOperatingSystem OperatingSystem { get; set; }
         public InstanceType InstanceType { get; set; }
         public IStorage Storage { get; set; }

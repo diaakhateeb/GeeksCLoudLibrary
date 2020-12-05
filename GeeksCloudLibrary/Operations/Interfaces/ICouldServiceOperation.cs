@@ -11,5 +11,6 @@ namespace GeeksCloudLibrary.Operations.Interfaces
         Task<bool> DeleteAsync(string infraName);
 
         Task<ICloudService<T>> LoadAsync(string infraName);
+        string FindInfrastructure(string infraName);
     }
 }

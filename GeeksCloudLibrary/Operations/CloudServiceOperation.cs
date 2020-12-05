@@ -1,4 +1,5 @@
 ﻿using GeeksCloudLibrary.Operations.Interfaces;
+using GeeksCloudLibrary.Providers.Interfaces;
 using Newtonsoft.Json;
 using System;
 using System.IO;
@@ -9,6 +10,12 @@ namespace GeeksCloudLibrary.Operations
     public class CloudServiceOperation<T> : ICouldServiceOperation<T>
     {
         private readonly ICloudService<T> _cloudService;
+        private readonly IProvider _provider;
+
+        public CloudServiceOperation(IProvider provider)
+        {
+            _provider = provider;
+        }
 
         public CloudServiceOperation(ICloudService<T> cloudService)
         {
@@ -28,12 +35,12 @@ namespace GeeksCloudLibrary.Operations
             return await Task.Run (() =>
             {
                 var config2 = JsonConvert.SerializeObject (config);
-                var jsonPath = Path.Combine (@"c:\",
+                var jsonPath = Path.Combine (_cloudService.Provider.Device,
                     _cloudService.Provider.Name,
                     _cloudService.Infrastructure.Name,
                     _cloudService.ResourceInstance.Name);
                 Directory.CreateDirectory (jsonPath);
-                File.WriteAllText (jsonPath + @"\" + _cloudService.ResourceFile.Name, config2);
+                File.WriteAllText (Path.Combine (jsonPath, _cloudService.ResourceFile.Name), config2);
 
                 return _cloudService;
             });
@@ -46,12 +53,27 @@ namespace GeeksCloudLibrary.Operations
 
         public Task<bool> DeleteAsync(string infraName)
         {
-            throw new NotImplementedException ();
+            var infraPath2 = Path.Combine (_provider.Device,
+                _provider.Name,
+                infraName);
+
+            Parallel.ForEach (Directory.GetDirectories (infraPath2), d =>
+              {
+                  Directory.Delete (d, true);
+              });
+
+            return Task.Run (() => true);
         }
 
-        public Task<ICloudService<T>> LoadAsync(string infraName)
+        public async Task<ICloudService<T>> LoadAsync(string infraName)
         {
-            throw new NotImplementedException ();
+            return await Task.Run(() => new CloudService<T>());
+
+        }
+
+        public string FindInfrastructure(string infraName)
+        {
+            return "";
         }
     }
 }

@@ -4,10 +4,11 @@ using GeeksCloudLibrary.Resource.Specs.NetworkPerformance.Enum;
 using GeeksCloudLibrary.Resource.Specs.Processor.Interfaces;
 using GeeksCloudLibrary.Resource.Specs.Storage.Interfaces;
 using GeeksCloudLibrary.Resource.VirtualMachine.OperatingSystem.Interfaces;
+using GeeksCloudLibrary.Shared.Interfaces;
 
 namespace GeeksCloudLibrary.Resource.VirtualMachine.Interfaces
 {
-    public interface IVirtualMachine
+    public interface IVirtualMachine : IResourceName
     {
         IOperatingSystem OperatingSystem { get; set; }
         IStorage Storage { get; set; }
@@ -15,7 +16,6 @@ namespace GeeksCloudLibrary.Resource.VirtualMachine.Interfaces
         IProcessor Processor { get; set; }
         IMemory Memory { get; set; }
         Performance NetworkPerformance { get; set; }
-
         string Tag { get; set; }
     }
 }

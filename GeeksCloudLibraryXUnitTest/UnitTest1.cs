@@ -39,7 +39,7 @@ namespace GeeksCloudLibraryXUnitTest
             #region co1
             var co1 = new CloudService<IVirtualMachine>
             {
-                Provider = new Provider { Name = "IGS" },
+                Provider = new Provider { Name = "IGS", Device = @"C:\GeeksCloudService" },
                 Infrastructure = new Infrastructure { Name = "UAT" },
                 ResourceInstance = new ResourceInstance { Name = "Windows-Dev-VM" }
             };
@@ -49,7 +49,7 @@ namespace GeeksCloudLibraryXUnitTest
                 Name = co1.Infrastructure.Name + "_SERVER.json",
                 Content = new VirtualMachine
                 {
-
+                    Name = "Windows Server 2016 R2 Dev. Virtual Machine",
                     OperatingSystem = new WindowsOperatingSystem
                     {
                         Name = "Windows Server 2016 R2",
@@ -79,16 +79,16 @@ namespace GeeksCloudLibraryXUnitTest
                 }
             };
 
-            var cloudServiceOperation1 = 
-                (ICouldServiceOperation<IVirtualMachine>)new CloudServiceOperation<IVirtualMachine>(co1);
+            var cloudServiceOperation1 =
+                (ICouldServiceOperation<IVirtualMachine>)new CloudServiceOperation<IVirtualMachine> (co1);
             infrastructuresList.Add (cloudServiceOperation1.InitializeAsync ());
             #endregion
 
             #region co2
             var co2 = new CloudService<IDatabaseServer>
             {
-                Provider = new Provider { Name = "SAMS" },
-                Infrastructure = new Infrastructure { Name = "XYZ" },
+                Provider = new Provider { Name = "IGS", Device = @"C:\GeeksCloudService" },
+                Infrastructure = new Infrastructure { Name = "Test" },
                 ResourceInstance = new ResourceInstance { Name = "SQL Server Test" }
             };
 
@@ -97,6 +97,7 @@ namespace GeeksCloudLibraryXUnitTest
                 Name = co2.Infrastructure.Name + "_SERVER.json",
                 Content = new MsSqlServer
                 {
+                    Name = "MS SQL Server for Pre-Production Testing",
                     InstanceType = InstanceType.Large,
                     Memory = new Memory { Size = 64, SpaceSizeUnit = SizeUnit.GiB },
                     NetworkPerformance = Performance.High,
@@ -106,7 +107,7 @@ namespace GeeksCloudLibraryXUnitTest
                 }
             };
 
-            var cloudServiceOperation2 = 
+            var cloudServiceOperation2 =
                 (ICouldServiceOperation<IDatabaseServer>)new CloudServiceOperation<IDatabaseServer> (co2);
             infrastructuresList.Add (cloudServiceOperation2.InitializeAsync ());
             #endregion

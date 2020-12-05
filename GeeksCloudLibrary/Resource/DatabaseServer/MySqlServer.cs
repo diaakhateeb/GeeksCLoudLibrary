@@ -8,6 +8,7 @@ namespace GeeksCloudLibrary.Resource.DatabaseServer
 {
     public class MySqlServer : IDatabaseServer
     {
+        public string Name { get; set; }
         public int Version { get; set; }
         public string Vendor { get; set; }
         public IStorage Storage { get; set; }
