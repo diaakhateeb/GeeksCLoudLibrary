@@ -2,7 +2,7 @@
 
 namespace GeeksCloudLibrary.Infrastructure.Interfaces
 {
-    public interface IInfrastructure : IResourceName
+    public interface IInfrastructure : IResource
     {
 
     }

@@ -2,7 +2,7 @@
 
 namespace GeeksCloudLibrary.Providers.Interfaces
 {
-    public interface IProvider : IResourceName
+    public interface IProvider : IResource
     {
         string Device { get; set; }
     }

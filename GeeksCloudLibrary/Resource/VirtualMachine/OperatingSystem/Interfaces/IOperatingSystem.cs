@@ -3,7 +3,7 @@ using GeeksCloudLibrary.Shared.Interfaces;
 
 namespace GeeksCloudLibrary.Resource.VirtualMachine.OperatingSystem.Interfaces
 {
-    public interface IOperatingSystem : IResourceName
+    public interface IOperatingSystem : IResource
     {
         int Version { get; set; }
         OperatingSystemArchitecture Architecture { get; set; }

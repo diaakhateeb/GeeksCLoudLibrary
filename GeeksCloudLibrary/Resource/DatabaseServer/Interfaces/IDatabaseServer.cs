@@ -6,7 +6,7 @@ using GeeksCloudLibrary.Shared.Interfaces;
 
 namespace GeeksCloudLibrary.Resource.DatabaseServer.Interfaces
 {
-    public interface IDatabaseServer : IResourceName
+    public interface IDatabaseServer : IResource
     {
         int Version { get; set; }
         string Vendor { get; set; }
