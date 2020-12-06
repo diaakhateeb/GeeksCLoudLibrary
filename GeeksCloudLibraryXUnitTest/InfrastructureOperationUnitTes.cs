@@ -167,12 +167,12 @@ namespace GeeksCloudLibraryXUnitTest
         {
             var updateModel = new UpdateResourceModel
             {
-                InstanceType = InstanceType.Medium,
-                Memory = new Memory { Size = 50, SpaceSizeUnit = SizeUnit.GiB },
-                NetworkPerformance = Performance.Moderate,
-                Processor = new Processor { Cores = 32, Speed = 266 },
-                Storage = new Storage { Size = 500, VolumeType = VolumeType.Extension },
-                Tag = "New Dev Machine"
+                InstanceType = InstanceType.XLarge,
+                Memory = new Memory { Size = 100, SpaceSizeUnit = SizeUnit.GiB },
+                NetworkPerformance = Performance.High,
+                Processor = new Processor { Cores = 64, Speed = 300 },
+                Storage = new Storage { Size = 800, VolumeType = VolumeType.Extension },
+                Tag = "New Dev Machine 2"
             };
 
             await infrastructureOperation.UpdateAsync("UAT", updateModel);

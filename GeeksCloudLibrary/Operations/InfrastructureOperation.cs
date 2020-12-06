@@ -37,11 +37,10 @@ namespace GeeksCloudLibrary.Operations
         public async Task UpdateAsync(string infraName, UpdateResourceModel model)
         {
             var resourceFileOperation = new ResourceFileOperation();
-            var infraFullPath = await _findInfrastructure.FindInfrastructurePathAsync(infraName);
             var deserializedJson = await LoadAsync(infraName);
-
             var newJsonContent = resourceFileOperation.UpdateResourceFile(deserializedJson, model);
             var infraJsonPath = await _findInfrastructure.FindInfrastructureJsonPathAsync(infraName);
+            
             await File.WriteAllTextAsync(infraJsonPath, newJsonContent.ToString());
         }
 
