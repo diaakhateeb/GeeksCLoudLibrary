@@ -25,7 +25,7 @@ namespace GeeksCloudLibrary.Operations
 			        _logger.Information($"Begin of {nameof(FindInfrastructurePathAsync)} method.");
 
 			        var infrastructureDirectory = Directory.GetDirectories(RootDevice,
-				        "*.*", SearchOption.AllDirectories).FirstOrDefault(x => x.Contains(infraName));
+				        "*.*", SearchOption.AllDirectories).FirstOrDefault(x => x.Equals(infraName));
 			        
 			        _logger.Information($"End of {nameof(FindInfrastructurePathAsync)} method.");
 			        

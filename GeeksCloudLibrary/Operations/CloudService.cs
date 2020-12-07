@@ -11,9 +11,7 @@ namespace GeeksCloudLibrary.Operations
     public class CloudService<T> : ICloudService<T>
     {
         public IProvider Provider { get; set; }
-
         public IInfrastructure Infrastructure { get; set; }
-
         public IResourceInstance ResourceInstance { get; set; }
         public IResourceFile<T> ResourceFile { get; set; }
     }

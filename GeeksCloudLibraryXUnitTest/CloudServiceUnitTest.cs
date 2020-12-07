@@ -34,8 +34,12 @@ namespace GeeksCloudLibraryXUnitTest
 
             try
 	        {
-		        await cloudServiceOperation.DeleteAsync("Test");
-	        }
+		        Log.Logger.Information($"Begin of Delete_Infrastructure_Ok()");
+
+				await cloudServiceOperation.DeleteAsync("Test");
+
+				Log.Logger.Information($"End of Delete_Infrastructure_Ok()");
+			}
 	        catch (DirectoryNotFoundException directoryNotFoundExp)
 	        {
 		        Log.Logger.Error(directoryNotFoundExp, "Directory is not found to delete.");
