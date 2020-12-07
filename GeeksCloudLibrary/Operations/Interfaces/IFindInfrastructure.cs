@@ -6,5 +6,6 @@ namespace GeeksCloudLibrary.Operations.Interfaces
     {
         Task<string> FindInfrastructurePathAsync(string infraName);
         Task<string> FindInfrastructureJsonPathAsync(string infraName);
+        string RootDevice { get; }
     }
 }

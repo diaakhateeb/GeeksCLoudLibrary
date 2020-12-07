@@ -33,43 +33,6 @@ namespace GeeksCloudLibraryXUnitTest
         {
             infrastructureOperation = new InfrastructureOperation(
                 new FindInfrastructure(@"C:\\GeeksCloudService"));
-            //new CloudService<IVirtualMachine>
-            //{
-            //    Infrastructure = new Infrastructure { Name = "UT" },
-            //    Provider = new Provider { Name = "Self-Provider", Device = @"C:\GeeksCloudService" },
-            //    ResourceInstance = new ResourceInstance { Name = "UnitTest" },
-            //    ResourceFile = new ResourceFile<IVirtualMachine>
-            //    {
-            //        Name = "Test VM",
-            //        Content = new VirtualMachine
-            //        {
-            //            Name = "VM for Pre-production",
-            //            InstanceType = InstanceType.Large,
-            //            Memory = new Memory { Size = 128, SpaceSizeUnit = SizeUnit.GiB },
-            //            NetworkPerformance = Performance.High,
-            //            OperatingSystem = new LinuxOperatingSystem
-            //            {
-            //                Architecture = OperatingSystemArchitecture.SixtyFour,
-            //                Name = "Linux Image",
-            //                Vendor = "Slackware",
-            //                Version = 15
-            //            },
-            //            Processor = new Processor
-            //            {
-            //                Cores = 16,
-            //                Speed = 280
-            //            },
-            //            Storage = new Storage
-            //            {
-            //                Size = 500,
-            //                SpaceSizeUnit = SizeUnit.GiB,
-            //                VolumeType = VolumeType.Root
-            //            },
-            //            Tag = "Linux Image for staging"
-            //        }
-            //    }
-            //},
-            //new ResourceFileOperation());
         }
 
         [Fact]
@@ -80,7 +43,7 @@ namespace GeeksCloudLibraryXUnitTest
             #region co1
             var co1 = new CloudService<IVirtualMachine>
             {
-                Provider = new Provider { Name = "IGS", Device = @"C:\GeeksCloudService" },
+                Provider = new Provider { Name = "IGS" },
                 Infrastructure = new Infrastructure { Name = "UAT" },
                 ResourceInstance = new ResourceInstance { Name = "Windows-Dev-VM" }
             };
@@ -129,7 +92,7 @@ namespace GeeksCloudLibraryXUnitTest
             #region co2
             var co2 = new CloudService<IDatabaseServer>
             {
-                Provider = new Provider { Name = "IGS", Device = @"C:\GeeksCloudService" },
+                Provider = new Provider { Name = "IGS" },
                 Infrastructure = new Infrastructure { Name = "Test" },
                 ResourceInstance = new ResourceInstance { Name = "SQL Server Test" }
             };

@@ -7,18 +7,16 @@ namespace GeeksCloudLibrary.Operations
 {
     public class FindInfrastructure : IFindInfrastructure
     {
-        private readonly string _device;
-
-        public FindInfrastructure(string device)
+        public FindInfrastructure(string rootDevice)
         {
-            _device = device;
+            RootDevice = rootDevice;
         }
 
         public async Task<string> FindInfrastructurePathAsync(string infraName)
         {
             return await Task.Run(() =>
             {
-                return Directory.GetDirectories(_device,
+                return Directory.GetDirectories(RootDevice,
                         "*.*", SearchOption.AllDirectories).
                     FirstOrDefault(x => x.Contains(infraName));
             });
@@ -31,5 +29,7 @@ namespace GeeksCloudLibrary.Operations
             return Directory.GetFiles(infraPath,
                 "*.*", SearchOption.AllDirectories).FirstOrDefault();
         }
+
+        public string RootDevice { get; }
     }
 }

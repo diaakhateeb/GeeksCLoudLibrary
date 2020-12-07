@@ -1,5 +1,4 @@
 ﻿using GeeksCloudLibrary.Operations.Interfaces;
-using GeeksCloudLibrary.Shared.Interfaces;
 using GeeksCloudLibrary.Shared.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -23,7 +22,7 @@ namespace GeeksCloudLibrary.Operations
             await Task.Run(() =>
           {
               var instanceConfig = JsonConvert.SerializeObject(cloudService, Formatting.Indented);
-              var jsonFilePath = Path.Combine(cloudService.Provider.Device,
+              var jsonFilePath = Path.Combine(_findInfrastructure.RootDevice,
                   cloudService.Provider.Name,
                   cloudService.Infrastructure.Name,
                   cloudService.ResourceInstance.Name);
@@ -40,7 +39,7 @@ namespace GeeksCloudLibrary.Operations
             var deserializedJson = await LoadAsync(infraName);
             var newJsonContent = resourceFileOperation.UpdateResourceFile(deserializedJson, model);
             var infraJsonPath = await _findInfrastructure.FindInfrastructureJsonPathAsync(infraName);
-            
+
             await File.WriteAllTextAsync(infraJsonPath, newJsonContent.ToString());
         }
 
