@@ -25,9 +25,22 @@ namespace GeeksCloudLibrary.Operations
         {
 	        try
 	        {
-		        await Task.Run(() =>
+		        if (string.IsNullOrEmpty(await _findInfrastructure.FindInfrastructurePathAsync(cloudService.Infrastructure.Name)))
+		        {
+			        _logger.Error($"InitializeAsync() failed. Infrastructure with such name is already existed. {GetType().Name}.{nameof(InitializeAsync)}");
+			        throw new ApplicationException("InitializeAsync() failed. Infrastructure with such name is already existed.");
+		        }
+
+				await Task.Run(async () =>
 		        {
 			        _logger.Information($"Begin of {nameof(InitializeAsync)} method.");
+
+			        if (!string.IsNullOrEmpty(
+				        await _findInfrastructure.FindInfrastructurePathAsync(cloudService.Infrastructure.Name)))
+			        {
+				        _logger.Error($"InitializeAsync() failed. Infrastructure with such name is already existed. {GetType().Name}.{nameof(InitializeAsync)}");
+				        throw new ApplicationException("InitializeAsync() failed. Infrastructure with such name is already existed.");
+			        }
 
 			        var instanceConfig = JsonConvert.SerializeObject(cloudService, Formatting.Indented);
 			        var jsonFilePath = Path.Combine(_findInfrastructure.RootDevice,
@@ -36,7 +49,7 @@ namespace GeeksCloudLibrary.Operations
 				        cloudService.ResourceInstance.Name);
 
 			        Directory.CreateDirectory(jsonFilePath);
-			        File.WriteAllTextAsync(Path.Combine(jsonFilePath, cloudService.ResourceFile.Name),
+			        await File.WriteAllTextAsync(Path.Combine(jsonFilePath, cloudService.ResourceFile.Name),
 				        instanceConfig);
 
 			        _logger.Information($"End of {nameof(InitializeAsync)} method.");
