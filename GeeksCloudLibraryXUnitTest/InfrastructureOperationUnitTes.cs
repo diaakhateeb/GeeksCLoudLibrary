@@ -21,6 +21,7 @@ using GeeksCloudLibrary.Shared.Model;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Serilog;
 using Xunit;
 
 namespace GeeksCloudLibraryXUnitTest
@@ -31,8 +32,13 @@ namespace GeeksCloudLibraryXUnitTest
 
         public InfrastructureOperationUnitTes()
         {
+	        Log.Logger = new LoggerConfiguration().
+		        WriteTo.
+		        File(@"C:\GeeksCloudService\CloudService_.log", rollingInterval: RollingInterval.Day).
+		        CreateLogger();
             infrastructureOperation = new InfrastructureOperation(
-                new FindInfrastructure(@"C:\\GeeksCloudService"));
+                new FindInfrastructure(Log.Logger, @"C:\\GeeksCloudService"), 
+                Log.Logger);
         }
 
         [Fact]
@@ -80,10 +86,10 @@ namespace GeeksCloudLibraryXUnitTest
                 }
             };
 
-            var infrastructureOperation1 = new InfrastructureOperation(
-                new FindInfrastructure(@"C:\\GeeksCloudService"));
+            var infrastructureOperationVm = new InfrastructureOperation(
+                new FindInfrastructure(Log.Logger,@"C:\\GeeksCloudService"), Log.Logger);
 
-            await infrastructureOperation1.InitializeAsync(cloudServiceVm);
+            await infrastructureOperationVm.InitializeAsync(cloudServiceVm);
         }
 
         [Fact]
@@ -111,10 +117,10 @@ namespace GeeksCloudLibraryXUnitTest
                 }
             };
 
-            var infrastructureOperation2 = new InfrastructureOperation(
-                new FindInfrastructure(@"C:\\GeeksCloudService"));
+            var infrastructureOperationSqlServer = new InfrastructureOperation(
+                new FindInfrastructure(Log.Logger,@"C:\\GeeksCloudService"), Log.Logger);
 
-            await infrastructureOperation2.InitializeAsync(cloudServiceDb);
+            await infrastructureOperationSqlServer.InitializeAsync(cloudServiceDb);
         }
 
         [Fact]
@@ -165,10 +171,10 @@ namespace GeeksCloudLibraryXUnitTest
                 }
             };
 
-            var infrastructureOperation1 = new InfrastructureOperation(
-                new FindInfrastructure(@"C:\\GeeksCloudService"));
+            var infrastructureOperationVM = new InfrastructureOperation(
+	            new FindInfrastructure(Log.Logger, @"C:\\GeeksCloudService"), Log.Logger);
 
-            infrastructuresList.Add(infrastructureOperation1.InitializeAsync(cloudServiceVm));
+            infrastructuresList.Add(infrastructureOperationVM.InitializeAsync(cloudServiceVm));
             #endregion
 
             #region cloudServiceDbServer
@@ -195,7 +201,7 @@ namespace GeeksCloudLibraryXUnitTest
             };
 
             var infrastructureOperation2 = new InfrastructureOperation(
-                new FindInfrastructure(@"C:\\GeeksCloudService"));
+	            new FindInfrastructure(Log.Logger, @"C:\\GeeksCloudService"), Log.Logger);
 
             infrastructuresList.Add(infrastructureOperation2.InitializeAsync(cloudServiceDbServer));
             #endregion
@@ -251,10 +257,10 @@ namespace GeeksCloudLibraryXUnitTest
                 }
             };
 
-            var infrastructureOperation1 = new InfrastructureOperation(
-                new FindInfrastructure(@"C:\\GeeksCloudService"));
+            var infrastructureOperationVM = new InfrastructureOperation(
+	            new FindInfrastructure(Log.Logger, @"C:\\GeeksCloudService"), Log.Logger);
 
-            infrastructuresList.Add(infrastructureOperation1.InitializeAsync(cloudServiceVm));
+            infrastructuresList.Add(infrastructureOperationVM.InitializeAsync(cloudServiceVm));
             #endregion
 
             #region cloudServiceDbServer
@@ -280,10 +286,10 @@ namespace GeeksCloudLibraryXUnitTest
                 }
             };
 
-            var infrastructureOperation2 = new InfrastructureOperation(
-                new FindInfrastructure(@"C:\\GeeksCloudService"));
+            var infrastructureOperationSqlServer = new InfrastructureOperation(
+	            new FindInfrastructure(Log.Logger, @"C:\\GeeksCloudService"), Log.Logger);
 
-            infrastructuresList.Add(infrastructureOperation2.InitializeAsync(cloudServiceDbServer));
+            infrastructuresList.Add(infrastructureOperationSqlServer.InitializeAsync(cloudServiceDbServer));
             #endregion
 
             await Task.WhenAll(infrastructuresList);

@@ -20,7 +20,7 @@ namespace GeeksCloudLibraryXUnitTest
 	            CreateLogger();
 
             cloudServiceOperation = new CloudServiceOperation(
-                new FindInfrastructure(@"C:\\GeeksCloudService"),
+                new FindInfrastructure(Log.Logger, @"C:\\GeeksCloudService"),
                 Log.Logger);
         }
 

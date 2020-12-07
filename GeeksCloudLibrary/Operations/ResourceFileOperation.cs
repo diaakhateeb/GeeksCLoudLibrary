@@ -1,7 +1,11 @@
-﻿using GeeksCloudLibrary.Operations.Interfaces;
+﻿using System;
+using System.IO;
+using GeeksCloudLibrary.Operations.Interfaces;
 using GeeksCloudLibrary.Shared.Model;
 using Newtonsoft.Json.Linq;
 using System.Linq;
+using Newtonsoft.Json;
+using Serilog;
 
 namespace GeeksCloudLibrary.Operations
 {
@@ -10,22 +14,65 @@ namespace GeeksCloudLibrary.Operations
         private JObject _deserializedJsonContent;
         private UpdateResourceModel _updateResourceModel;
         private JToken resourceFileToken;
+        private readonly ILogger _logger;
+
+        public ResourceFileOperation(ILogger logger)
+        {
+	        _logger = logger;
+        }
 
         public JObject UpdateResourceFile(JObject deserializedJsonContent, UpdateResourceModel updateResourceModel)
         {
-            _deserializedJsonContent = deserializedJsonContent;
-            _updateResourceModel = updateResourceModel;
-            resourceFileToken = _deserializedJsonContent.Property("ResourceFile").First()
-                .Last().Children().FirstOrDefault();
+	        try
+	        {
+		        _logger.Information($"Begin of {nameof(UpdateResourceFile)} method.");
 
-            UpdateInstanceType();
-            UpdateStorage();
-            UpdateProcessor();
-            UpdateMemory();
-            UpdateNetwork();
-            UpdateTag();
+                _deserializedJsonContent = deserializedJsonContent;
+		        _updateResourceModel = updateResourceModel;
+		        resourceFileToken = _deserializedJsonContent.Property("ResourceFile").First()
+			        .Last().Children().FirstOrDefault();
 
-            return _deserializedJsonContent;
+		        UpdateInstanceType();
+		        UpdateStorage();
+		        UpdateProcessor();
+		        UpdateMemory();
+		        UpdateNetwork();
+		        UpdateTag();
+                
+		        _logger.Information($"End of {nameof(UpdateResourceFile)} method.");
+
+                return _deserializedJsonContent;
+	        }
+	        catch (ArgumentNullException argumentNullExp)
+	        {
+		        _logger.Error(argumentNullExp,
+			        $"One or more argument is null. {GetType().Name}.{nameof(UpdateResourceFile)}");
+		        throw;
+	        }
+	        catch (ArgumentException argumentExp)
+	        {
+		        _logger.Error(argumentExp,
+			        $"Arguments error. {GetType().Name}.{nameof(UpdateResourceFile)}");
+		        throw;
+	        }
+	        catch (DirectoryNotFoundException directoryNotFoundExp)
+	        {
+		        _logger.Error(directoryNotFoundExp,
+			        $"Infrastructure resource directory is not existed. {GetType().Name}.{nameof(UpdateResourceFile)}");
+		        throw;
+	        }
+	        catch (IOException ioExp)
+	        {
+		        _logger.Error(ioExp,
+			        $"Can not access infrastructure resource config file. { GetType().Name}.{ nameof(UpdateResourceFile)}");
+		        throw;
+	        }
+	        catch (Exception exp)
+	        {
+		        _logger.Error(exp,
+			        $"Error finding infrastructure resource config file. { GetType().Name}.{ nameof(UpdateResourceFile)}");
+		        throw;
+	        }
         }
 
         private void UpdateInstanceType()

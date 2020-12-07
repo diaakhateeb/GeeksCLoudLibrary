@@ -28,7 +28,10 @@ namespace GeeksCloudLibrary.Operations
                     var infraFullPath = await _findInfrastructure.FindInfrastructurePathAsync(infraName);
 
                     Parallel.ForEach(Directory.GetDirectories(infraFullPath),
-                        directory => { Directory.Delete(directory, true); });
+	                    directory =>
+	                    {
+		                    Directory.Delete(directory, true);
+	                    });
 
                     _logger.Information($"Done deleting infrastructure: {infraName} - {GetType().Name}.{nameof(DeleteAsync)}");
                 });
