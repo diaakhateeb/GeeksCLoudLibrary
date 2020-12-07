@@ -18,7 +18,7 @@ namespace GeeksCloudLibrary.Operations
             _findInfrastructure = findInfrastructure;
         }
 
-        public async Task InitializeAsync<T>(ICloudService<T> cloudService) where T : IResource
+        public async Task InitializeAsync<T>(ICloudService<T> cloudService)
         {
             await Task.Run(() =>
           {

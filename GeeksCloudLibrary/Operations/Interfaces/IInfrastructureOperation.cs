@@ -7,7 +7,7 @@ namespace GeeksCloudLibrary.Operations.Interfaces
 {
     public interface IInfrastructureOperation
     {
-        Task InitializeAsync<T>(ICloudService<T> cloudService) where T : IResource;
+        Task InitializeAsync<T>(ICloudService<T> cloudService);
         Task UpdateAsync(string infraName, UpdateResourceModel model);
         Task<JObject> LoadAsync(string infraName);
     }

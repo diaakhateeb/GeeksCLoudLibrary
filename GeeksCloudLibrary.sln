@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeeksCloudLibrary", "GeeksCloudLibrary\GeeksCloudLibrary.csproj", "{53E9A9A8-80F8-4AAA-81E9-30CFEE8067F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeeksCloudLibrary", "GeeksCloudLibrary\GeeksCloudLibrary.csproj", "{53E9A9A8-80F8-4AAA-81E9-30CFEE8067F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeeksCloudLibraryXUnitTest", "GeeksCloudLibraryXUnitTest\GeeksCloudLibraryXUnitTest.csproj", "{686E895F-B82E-4362-894A-8601DC07EE06}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeeksCloudLibraryXUnitTest", "GeeksCloudLibraryXUnitTest\GeeksCloudLibraryXUnitTest.csproj", "{686E895F-B82E-4362-894A-8601DC07EE06}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
