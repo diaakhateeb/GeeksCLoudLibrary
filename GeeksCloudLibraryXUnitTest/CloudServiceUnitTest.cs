@@ -25,7 +25,7 @@ namespace GeeksCloudLibraryXUnitTest
 		}
 
 		[Fact]
-		public async Task Delete_Infrastructure_Ok()
+		public async Task Delete_Infrastructure()
 		{
 			Log.Logger = new LoggerConfiguration().
 				WriteTo.

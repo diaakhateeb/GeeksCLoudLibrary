@@ -43,7 +43,7 @@ namespace GeeksCloudLibraryXUnitTest
 		}
 
 		[Fact]
-		public async void Initialize_VirtualMachine_Infrastructure_Ok()
+		public async void Initialize_VirtualMachine_Infrastructure()
 		{
 			Log.Logger.Information($"Begin of Initialize_VirtualMachine_Infrastructure_Ok()." +
 			                       $"{Environment.NewLine}Construct CloudService VM.");
@@ -105,7 +105,7 @@ namespace GeeksCloudLibraryXUnitTest
 		}
 
 		[Fact]
-		public async void Initialize_Database_Server_Infrastructure_Ok()
+		public async void Initialize_Database_Server_Infrastructure()
 		{
 			Log.Logger.Information($"Begin of Initialize_Database_Server_Infrastructure()." +
 			                       $"{Environment.NewLine}Construct CloudService DB server.");
@@ -144,7 +144,7 @@ namespace GeeksCloudLibraryXUnitTest
 		}
 
 		[Fact]
-		public async void Initialize_Two_Infrastructures_Same_Provider_Ok()
+		public async void Initialize_Two_Infrastructures_Same_Provider()
 		{
 
 			Log.Logger.Information($"Begin of Initialize_Two_Infrastructures_Same_Provider_Ok()." +
@@ -249,7 +249,7 @@ namespace GeeksCloudLibraryXUnitTest
 		}
 
 		[Fact]
-		public async void Initialize_Two_Infrastructures_Different_Providers_Ok()
+		public async void Initialize_Two_Infrastructures_Different_Providers()
 		{
 			Log.Logger.Information($"Begin of Initialize_Two_Infrastructures_Different_Providers_Ok()." +
 			                       $"{Environment.NewLine}Construct CloudService VM.");
@@ -348,7 +348,7 @@ namespace GeeksCloudLibraryXUnitTest
 		}
 
 		[Fact]
-		public async Task Load_Infrastructure_Ok()
+		public async Task Load_Infrastructure()
 		{
 			Log.Logger.Information($"Begin of Load_Infrastructure_Ok()");
 
@@ -359,7 +359,7 @@ namespace GeeksCloudLibraryXUnitTest
 		}
 
 		[Fact]
-		public async Task Update_Infrastructure_Ok()
+		public async Task Update_Infrastructure()
 		{
 			Log.Logger.Information($"Begin of Update_Infrastructure_Ok()");
 
