@@ -36,21 +36,18 @@ namespace GeeksCloudLibraryXUnitTest
         }
 
         [Fact]
-        public async void Initialize_Infrastructure_Ok()
+        public async void Initialize_VirtualMachine_Infrastructure_Same_Provider_Ok()
         {
-            var infrastructuresList = new List<Task>();
-
-            #region co1
-            var co1 = new CloudService<IVirtualMachine>
+            var cloudServiceVm = new CloudService<IVirtualMachine>
             {
                 Provider = new Provider { Name = "IGS" },
                 Infrastructure = new Infrastructure { Name = "UAT" },
                 ResourceInstance = new ResourceInstance { Name = "Windows-Dev-VM" }
             };
 
-            co1.ResourceFile = new ResourceFile<IVirtualMachine>
+            cloudServiceVm.ResourceFile = new ResourceFile<IVirtualMachine>
             {
-                Name = co1.Infrastructure.Name + "_SERVER.json",
+                Name = cloudServiceVm.Infrastructure.Name + "_SERVER.json",
                 Content = new VirtualMachine
                 {
                     Name = "Windows Server 2016 R2 Dev. Virtual Machine",
@@ -86,20 +83,22 @@ namespace GeeksCloudLibraryXUnitTest
             var infrastructureOperation1 = new InfrastructureOperation(
                 new FindInfrastructure(@"C:\\GeeksCloudService"));
 
-            infrastructuresList.Add(infrastructureOperation1.InitializeAsync(co1));
-            #endregion
+            await infrastructureOperation1.InitializeAsync(cloudServiceVm);
+        }
 
-            #region co2
-            var co2 = new CloudService<IDatabaseServer>
+        [Fact]
+        public async void Initialize_Database_Server_Infrastructure_Same_Provider_Ok()
+        {
+            var cloudServiceDb = new CloudService<IDatabaseServer>
             {
                 Provider = new Provider { Name = "IGS" },
                 Infrastructure = new Infrastructure { Name = "Test" },
                 ResourceInstance = new ResourceInstance { Name = "SQL Server Test" }
             };
 
-            co2.ResourceFile = new ResourceFile<IDatabaseServer>
+            cloudServiceDb.ResourceFile = new ResourceFile<IDatabaseServer>
             {
-                Name = co2.Infrastructure.Name + "_SERVER.json",
+                Name = cloudServiceDb.Infrastructure.Name + "_SERVER.json",
                 Content = new MsSqlServer
                 {
                     Name = "MS SQL Server for Pre-Production Testing",
@@ -115,7 +114,176 @@ namespace GeeksCloudLibraryXUnitTest
             var infrastructureOperation2 = new InfrastructureOperation(
                 new FindInfrastructure(@"C:\\GeeksCloudService"));
 
-            infrastructuresList.Add(infrastructureOperation2.InitializeAsync(co2));
+            await infrastructureOperation2.InitializeAsync(cloudServiceDb);
+        }
+
+        [Fact]
+        public async void Initialize_Two_Infrastructures_Same_Provider_Ok()
+        {
+            var infrastructuresList = new List<Task>();
+
+            #region cloudServiceVm
+            var cloudServiceVm = new CloudService<IVirtualMachine>
+            {
+                Provider = new Provider { Name = "IGS" },
+                Infrastructure = new Infrastructure { Name = "UAT" },
+                ResourceInstance = new ResourceInstance { Name = "Windows-Dev-VM" }
+            };
+
+            cloudServiceVm.ResourceFile = new ResourceFile<IVirtualMachine>
+            {
+                Name = cloudServiceVm.Infrastructure.Name + "_SERVER.json",
+                Content = new VirtualMachine
+                {
+                    Name = "Windows Server 2016 R2 Dev. Virtual Machine",
+                    OperatingSystem = new WindowsOperatingSystem
+                    {
+                        Name = "Windows Server 2016 R2",
+                        Version = 10,
+                        Vendor = "Microsoft",
+                        Architecture = OperatingSystemArchitecture.SixtyFour
+                    },
+                    Storage = new Storage
+                    {
+                        Size = 100,
+                        SpaceSizeUnit = SizeUnit.GiB,
+                        VolumeType = VolumeType.Root
+                    },
+                    Processor = new Processor
+                    {
+                        Cores = 8,
+                        Speed = 260
+                    },
+                    Memory = new Memory
+                    {
+                        Size = 32,
+                        SpaceSizeUnit = SizeUnit.GiB
+                    },
+                    NetworkPerformance = Performance.High,
+                    InstanceType = InstanceType.Large,
+                    Tag = "Dev VM"
+                }
+            };
+
+            var infrastructureOperation1 = new InfrastructureOperation(
+                new FindInfrastructure(@"C:\\GeeksCloudService"));
+
+            infrastructuresList.Add(infrastructureOperation1.InitializeAsync(cloudServiceVm));
+            #endregion
+
+            #region cloudServiceDbServer
+            var cloudServiceDbServer = new CloudService<IDatabaseServer>
+            {
+                Provider = new Provider { Name = "IGS" },
+                Infrastructure = new Infrastructure { Name = "Test" },
+                ResourceInstance = new ResourceInstance { Name = "SQL Server Test" }
+            };
+
+            cloudServiceDbServer.ResourceFile = new ResourceFile<IDatabaseServer>
+            {
+                Name = cloudServiceDbServer.Infrastructure.Name + "_SERVER.json",
+                Content = new MsSqlServer
+                {
+                    Name = "MS SQL Server for Pre-Production Testing",
+                    InstanceType = InstanceType.Large,
+                    Memory = new Memory { Size = 64, SpaceSizeUnit = SizeUnit.GiB },
+                    NetworkPerformance = Performance.High,
+                    Storage = new Storage { Size = 100, SpaceSizeUnit = SizeUnit.GiB, VolumeType = VolumeType.Extension },
+                    Vendor = "Microsoft",
+                    Version = 2016
+                }
+            };
+
+            var infrastructureOperation2 = new InfrastructureOperation(
+                new FindInfrastructure(@"C:\\GeeksCloudService"));
+
+            infrastructuresList.Add(infrastructureOperation2.InitializeAsync(cloudServiceDbServer));
+            #endregion
+
+            await Task.WhenAll(infrastructuresList);
+        }
+
+        [Fact]
+        public async void Initialize_Two_Infrastructures_Different_Providers_Ok()
+        {
+            var infrastructuresList = new List<Task>();
+
+            #region cloudServiceVm
+            var cloudServiceVm = new CloudService<IVirtualMachine>
+            {
+                Provider = new Provider { Name = "IGS" },
+                Infrastructure = new Infrastructure { Name = "UAT" },
+                ResourceInstance = new ResourceInstance { Name = "Windows-Dev-VM" }
+            };
+
+            cloudServiceVm.ResourceFile = new ResourceFile<IVirtualMachine>
+            {
+                Name = cloudServiceVm.Infrastructure.Name + "_SERVER.json",
+                Content = new VirtualMachine
+                {
+                    Name = "Windows Server 2016 R2 Dev. Virtual Machine",
+                    OperatingSystem = new WindowsOperatingSystem
+                    {
+                        Name = "Windows Server 2016 R2",
+                        Version = 10,
+                        Vendor = "Microsoft",
+                        Architecture = OperatingSystemArchitecture.SixtyFour
+                    },
+                    Storage = new Storage
+                    {
+                        Size = 100,
+                        SpaceSizeUnit = SizeUnit.GiB,
+                        VolumeType = VolumeType.Root
+                    },
+                    Processor = new Processor
+                    {
+                        Cores = 8,
+                        Speed = 260
+                    },
+                    Memory = new Memory
+                    {
+                        Size = 32,
+                        SpaceSizeUnit = SizeUnit.GiB
+                    },
+                    NetworkPerformance = Performance.High,
+                    InstanceType = InstanceType.Large,
+                    Tag = "Dev VM"
+                }
+            };
+
+            var infrastructureOperation1 = new InfrastructureOperation(
+                new FindInfrastructure(@"C:\\GeeksCloudService"));
+
+            infrastructuresList.Add(infrastructureOperation1.InitializeAsync(cloudServiceVm));
+            #endregion
+
+            #region cloudServiceDbServer
+            var cloudServiceDbServer = new CloudService<IDatabaseServer>
+            {
+                Provider = new Provider { Name = "SAMS" },
+                Infrastructure = new Infrastructure { Name = "Test" },
+                ResourceInstance = new ResourceInstance { Name = "SQL Server Test" }
+            };
+
+            cloudServiceDbServer.ResourceFile = new ResourceFile<IDatabaseServer>
+            {
+                Name = cloudServiceDbServer.Infrastructure.Name + "_SERVER.json",
+                Content = new MsSqlServer
+                {
+                    Name = "MS SQL Server for Pre-Production Testing",
+                    InstanceType = InstanceType.Large,
+                    Memory = new Memory { Size = 64, SpaceSizeUnit = SizeUnit.GiB },
+                    NetworkPerformance = Performance.High,
+                    Storage = new Storage { Size = 100, SpaceSizeUnit = SizeUnit.GiB, VolumeType = VolumeType.Extension },
+                    Vendor = "Microsoft",
+                    Version = 2016
+                }
+            };
+
+            var infrastructureOperation2 = new InfrastructureOperation(
+                new FindInfrastructure(@"C:\\GeeksCloudService"));
+
+            infrastructuresList.Add(infrastructureOperation2.InitializeAsync(cloudServiceDbServer));
             #endregion
 
             await Task.WhenAll(infrastructuresList);
