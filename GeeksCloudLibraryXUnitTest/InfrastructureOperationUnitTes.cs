@@ -27,406 +27,357 @@ using Xunit;
 
 namespace GeeksCloudLibraryXUnitTest
 {
-    public class InfrastructureOperationUnitTes
-    {
-        private readonly IInfrastructureOperation infrastructureOperation;
+	public class InfrastructureOperationUnitTes
+	{
+		private readonly IInfrastructureOperation infrastructureOperation;
 
-        public InfrastructureOperationUnitTes()
-        {
-	        Log.Logger = new LoggerConfiguration().
-		        WriteTo.
-		        File(@"C:\GeeksCloudService\CloudService_.log", rollingInterval: RollingInterval.Day).
-		        CreateLogger();
-            infrastructureOperation = new InfrastructureOperation(
-                new FindInfrastructure(Log.Logger, @"C:\\GeeksCloudService"), 
-                Log.Logger);
-        }
+		public InfrastructureOperationUnitTes()
+		{
+			Log.Logger = new LoggerConfiguration().
+				WriteTo.
+				File(@"C:\GeeksCloudService\CloudService_.log", rollingInterval: RollingInterval.Day).
+				CreateLogger();
+			infrastructureOperation = new InfrastructureOperation(
+				new FindInfrastructure(Log.Logger, @"C:\\GeeksCloudService"),
+				Log.Logger);
+		}
 
-        [Fact]
-        public async void Initialize_VirtualMachine_Infrastructure_Ok()
-        {
-	        try
-	        {
-		        Log.Logger.Information($"Begin of Initialize_VirtualMachine_Infrastructure_Ok()");
-                Log.Logger.Information($"Construct CloudService VM.");
-		        
-                var cloudServiceVm = new CloudService<IVirtualMachine>
-		        {
-			        Provider = new Provider {Name = "IGS"},
-			        Infrastructure = new Infrastructure {Name = "UAT"},
-			        ResourceInstance = new ResourceInstance {Name = "Windows-Dev-VM"}
-		        };
+		[Fact]
+		public async void Initialize_VirtualMachine_Infrastructure_Ok()
+		{
+			Log.Logger.Information($"Begin of Initialize_VirtualMachine_Infrastructure_Ok()." +
+			                       $"{Environment.NewLine}Construct CloudService VM.");
+			//Arrange
+			var cloudServiceVm = new CloudService<IVirtualMachine>
+			{
+				Provider = new Provider { Name = "IGS" },
+				Infrastructure = new Infrastructure { Name = "UAT" },
+				ResourceInstance = new ResourceInstance { Name = "Windows-Dev-VM" }
+			};
 
-		        Log.Logger.Information($"Set ResourceFile property of CloudService VM.");
-		        cloudServiceVm.ResourceFile = new ResourceFile<IVirtualMachine>
-		        {
-			        Name = cloudServiceVm.Infrastructure.Name + "_SERVER.json",
-			        Content = new VirtualMachine
-			        {
-				        Name = "Windows Server 2016 R2 Dev. Virtual Machine",
-				        OperatingSystem = new WindowsOperatingSystem
-				        {
-					        Name = "Windows Server 2016 R2",
-					        Version = 10,
-					        Vendor = "Microsoft",
-					        Architecture = OperatingSystemArchitecture.SixtyFour
-				        },
-				        Storage = new Storage
-				        {
-					        Size = 100,
-					        SpaceSizeUnit = SizeUnit.GiB,
-					        VolumeType = VolumeType.Root
-				        },
-				        Processor = new Processor
-				        {
-					        Cores = 8,
-					        Speed = 260
-				        },
-				        Memory = new Memory
-				        {
-					        Size = 32,
-					        SpaceSizeUnit = SizeUnit.GiB
-				        },
-				        NetworkPerformance = Performance.High,
-				        InstanceType = InstanceType.Large,
-				        Tag = "Dev VM"
-			        }
-		        };
+			Log.Logger.Information($"Set ResourceFile property of CloudService VM.");
+			cloudServiceVm.ResourceFile = new ResourceFile<IVirtualMachine>
+			{
+				Name = cloudServiceVm.Infrastructure.Name + "_SERVER.json",
+				Content = new VirtualMachine
+				{
+					Name = "Windows Server 2016 R2 Dev. Virtual Machine",
+					OperatingSystem = new WindowsOperatingSystem
+					{
+						Name = "Windows Server 2016 R2",
+						Version = 10,
+						Vendor = "Microsoft",
+						Architecture = OperatingSystemArchitecture.SixtyFour
+					},
+					Storage = new Storage
+					{
+						Size = 100,
+						SpaceSizeUnit = SizeUnit.GiB,
+						VolumeType = VolumeType.Root
+					},
+					Processor = new Processor
+					{
+						Cores = 8,
+						Speed = 260
+					},
+					Memory = new Memory
+					{
+						Size = 32,
+						SpaceSizeUnit = SizeUnit.GiB
+					},
+					NetworkPerformance = Performance.High,
+					InstanceType = InstanceType.Large,
+					Tag = "Dev VM"
+				}
+			};
 
-		        var infrastructureOperationVm = new InfrastructureOperation(
-			        new FindInfrastructure(Log.Logger, @"C:\\GeeksCloudService"), Log.Logger);
+			var infrastructureOperationVm = new InfrastructureOperation(
+				new FindInfrastructure(Log.Logger, @"C:\\GeeksCloudService"), Log.Logger);
 
-		        Log.Logger.Information($"Begin of InitializeAsync method() of unit testing.");
+			Log.Logger.Information($"Begin of InitializeAsync method() of unit testing.");
 
-		        await infrastructureOperationVm.InitializeAsync(cloudServiceVm);
+			//Act
+			await infrastructureOperationVm.InitializeAsync(cloudServiceVm);
 
-		        Log.Logger.Information($"End of InitializeAsync method() of unit testing.");
-	        }
-	        catch (Exception exp)
-	        {
-		        Log.Logger.Error(exp,
-			        $"Error Initializing CloudService VM.");
-                throw;
-	        }
-        }
+			Log.Logger.Information($"End of InitializeAsync method() of unit testing.");
 
-        [Fact]
-        public async void Initialize_Database_Server_Infrastructure_Ok()
-        {
-	        try
-	        {
-		        Log.Logger.Information($"Begin of Initialize_Database_Server_Infrastructure()");
-                Log.Logger.Information($"Construct CloudService DB server.");
-		        
-                var cloudServiceDb = new CloudService<IDatabaseServer>
-		        {
-			        Provider = new Provider {Name = "IGS"},
-			        Infrastructure = new Infrastructure {Name = "Test"},
-			        ResourceInstance = new ResourceInstance {Name = "SQL Server Test"}
-		        };
+			//await Assert.ThrowsAnyAsync<Exception>(() => infrastructureOperationVm.InitializeAsync(cloudServiceVm));
+		}
 
-		        cloudServiceDb.ResourceFile = new ResourceFile<IDatabaseServer>
-		        {
-			        Name = cloudServiceDb.Infrastructure.Name + "_SERVER.json",
-			        Content = new MsSqlServer
-			        {
-				        Name = "MS SQL Server for Pre-Production Testing",
-				        InstanceType = InstanceType.Large,
-				        Memory = new Memory {Size = 64, SpaceSizeUnit = SizeUnit.GiB},
-				        NetworkPerformance = Performance.High,
-				        Storage = new Storage
-					        {Size = 100, SpaceSizeUnit = SizeUnit.GiB, VolumeType = VolumeType.Extension},
-				        Vendor = "Microsoft",
-				        Version = 2016
-			        }
-		        };
+		[Fact]
+		public async void Initialize_Database_Server_Infrastructure_Ok()
+		{
+			Log.Logger.Information($"Begin of Initialize_Database_Server_Infrastructure()." +
+			                       $"{Environment.NewLine}Construct CloudService DB server.");
 
-		        var infrastructureOperationSqlServer = new InfrastructureOperation(
-			        new FindInfrastructure(Log.Logger, @"C:\\GeeksCloudService"), Log.Logger);
+			var cloudServiceDb = new CloudService<IDatabaseServer>
+			{
+				Provider = new Provider { Name = "IGS" },
+				Infrastructure = new Infrastructure { Name = "Test" },
+				ResourceInstance = new ResourceInstance { Name = "SQL Server Test" }
+			};
 
-		        Log.Logger.Information($"Begin of InitializeAsync method() of unit testing.");
+			cloudServiceDb.ResourceFile = new ResourceFile<IDatabaseServer>
+			{
+				Name = cloudServiceDb.Infrastructure.Name + "_SERVER.json",
+				Content = new MsSqlServer
+				{
+					Name = "MS SQL Server for Pre-Production Testing",
+					InstanceType = InstanceType.Large,
+					Memory = new Memory { Size = 64, SpaceSizeUnit = SizeUnit.GiB },
+					NetworkPerformance = Performance.High,
+					Storage = new Storage
+					{ Size = 100, SpaceSizeUnit = SizeUnit.GiB, VolumeType = VolumeType.Extension },
+					Vendor = "Microsoft",
+					Version = 2016
+				}
+			};
 
-		        await infrastructureOperationSqlServer.InitializeAsync(cloudServiceDb);
+			var infrastructureOperationSqlServer = new InfrastructureOperation(
+				new FindInfrastructure(Log.Logger, @"C:\\GeeksCloudService"), Log.Logger);
 
-		        Log.Logger.Information($"End of InitializeAsync method() of unit testing.");
-	        }
-	        catch (Exception exp)
-	        {
-		        Log.Logger.Error(exp,
-			        $"Error Initializing CloudService DB server.");
-                throw;
-	        }
-        }
+			Log.Logger.Information($"Begin of InitializeAsync method() of unit testing.");
 
-        [Fact]
-        public async void Initialize_Two_Infrastructures_Same_Provider_Ok()
-        {
-	        try
-	        {
-		        Log.Logger.Information($"Begin of Initialize_Two_Infrastructures_Same_Provider_Ok()");
-		        Log.Logger.Information($"Construct CloudService VM.");
+			await infrastructureOperationSqlServer.InitializeAsync(cloudServiceDb);
 
-		        var infrastructuresList = new List<Task>();
+			Log.Logger.Information($"End of InitializeAsync method() of unit testing.");
+		}
 
-		        #region cloudServiceVm
+		[Fact]
+		public async void Initialize_Two_Infrastructures_Same_Provider_Ok()
+		{
 
-		        var cloudServiceVm = new CloudService<IVirtualMachine>
-		        {
-			        Provider = new Provider {Name = "IGS"},
-			        Infrastructure = new Infrastructure {Name = "UAT"},
-			        ResourceInstance = new ResourceInstance {Name = "Windows-Dev-VM"}
-		        };
+			Log.Logger.Information($"Begin of Initialize_Two_Infrastructures_Same_Provider_Ok()." +
+			                       $"{Environment.NewLine}Construct CloudService VM.");
 
-		        cloudServiceVm.ResourceFile = new ResourceFile<IVirtualMachine>
-		        {
-			        Name = cloudServiceVm.Infrastructure.Name + "_SERVER.json",
-			        Content = new VirtualMachine
-			        {
-				        Name = "Windows Server 2016 R2 Dev. Virtual Machine",
-				        OperatingSystem = new WindowsOperatingSystem
-				        {
-					        Name = "Windows Server 2016 R2",
-					        Version = 10,
-					        Vendor = "Microsoft",
-					        Architecture = OperatingSystemArchitecture.SixtyFour
-				        },
-				        Storage = new Storage
-				        {
-					        Size = 100,
-					        SpaceSizeUnit = SizeUnit.GiB,
-					        VolumeType = VolumeType.Root
-				        },
-				        Processor = new Processor
-				        {
-					        Cores = 8,
-					        Speed = 260
-				        },
-				        Memory = new Memory
-				        {
-					        Size = 32,
-					        SpaceSizeUnit = SizeUnit.GiB
-				        },
-				        NetworkPerformance = Performance.High,
-				        InstanceType = InstanceType.Large,
-				        Tag = "Dev VM"
-			        }
-		        };
+			var infrastructuresList = new List<Task>();
 
-		        var infrastructureOperationVM = new InfrastructureOperation(
-			        new FindInfrastructure(Log.Logger, @"C:\\GeeksCloudService"), Log.Logger);
+			#region cloudServiceVm
 
-		        Log.Logger.Information($"Begin of InitializeAsync method() of unit testing.");
+			var cloudServiceVm = new CloudService<IVirtualMachine>
+			{
+				Provider = new Provider { Name = "IGS" },
+				Infrastructure = new Infrastructure { Name = "UAT" },
+				ResourceInstance = new ResourceInstance { Name = "Windows-Dev-VM" }
+			};
 
-		        infrastructuresList.Add(infrastructureOperationVM.InitializeAsync(cloudServiceVm));
+			cloudServiceVm.ResourceFile = new ResourceFile<IVirtualMachine>
+			{
+				Name = cloudServiceVm.Infrastructure.Name + "_SERVER.json",
+				Content = new VirtualMachine
+				{
+					Name = "Windows Server 2016 R2 Dev. Virtual Machine",
+					OperatingSystem = new WindowsOperatingSystem
+					{
+						Name = "Windows Server 2016 R2",
+						Version = 10,
+						Vendor = "Microsoft",
+						Architecture = OperatingSystemArchitecture.SixtyFour
+					},
+					Storage = new Storage
+					{
+						Size = 100,
+						SpaceSizeUnit = SizeUnit.GiB,
+						VolumeType = VolumeType.Root
+					},
+					Processor = new Processor
+					{
+						Cores = 8,
+						Speed = 260
+					},
+					Memory = new Memory
+					{
+						Size = 32,
+						SpaceSizeUnit = SizeUnit.GiB
+					},
+					NetworkPerformance = Performance.High,
+					InstanceType = InstanceType.Large,
+					Tag = "Dev VM"
+				}
+			};
 
-		        Log.Logger.Information($"End of InitializeAsync method() of unit testing.");
+			var infrastructureOperationVM = new InfrastructureOperation(
+				new FindInfrastructure(Log.Logger, @"C:\\GeeksCloudService"), Log.Logger);
 
-		        #endregion
+			Log.Logger.Information($"Begin of InitializeAsync method() of unit testing.");
 
-		        #region cloudServiceDbServer
+			infrastructuresList.Add(infrastructureOperationVM.InitializeAsync(cloudServiceVm));
 
-		        Log.Logger.Information($"Construct CloudService Sql Server.");
-		        var cloudServiceDbServer = new CloudService<IDatabaseServer>
-		        {
-			        Provider = new Provider {Name = "IGS"},
-			        Infrastructure = new Infrastructure {Name = "Test"},
-			        ResourceInstance = new ResourceInstance {Name = "SQL Server Test"}
-		        };
+			Log.Logger.Information($"End of InitializeAsync method() of unit testing.");
 
-		        cloudServiceDbServer.ResourceFile = new ResourceFile<IDatabaseServer>
-		        {
-			        Name = cloudServiceDbServer.Infrastructure.Name + "_SERVER.json",
-			        Content = new MsSqlServer
-			        {
-				        Name = "MS SQL Server for Pre-Production Testing",
-				        InstanceType = InstanceType.Large,
-				        Memory = new Memory {Size = 64, SpaceSizeUnit = SizeUnit.GiB},
-				        NetworkPerformance = Performance.High,
-				        Storage = new Storage
-					        {Size = 100, SpaceSizeUnit = SizeUnit.GiB, VolumeType = VolumeType.Extension},
-				        Vendor = "Microsoft",
-				        Version = 2016
-			        }
-		        };
+			#endregion
 
-		        var infrastructureOperationSqlServer = new InfrastructureOperation(
-			        new FindInfrastructure(Log.Logger, @"C:\\GeeksCloudService"), Log.Logger);
+			#region cloudServiceDbServer
 
-		        Log.Logger.Information($"Begin of InitializeAsync method() of unit testing.");
+			Log.Logger.Information($"Construct CloudService Sql Server.");
+			var cloudServiceDbServer = new CloudService<IDatabaseServer>
+			{
+				Provider = new Provider { Name = "IGS" },
+				Infrastructure = new Infrastructure { Name = "Test" },
+				ResourceInstance = new ResourceInstance { Name = "SQL Server Test" }
+			};
 
-		        infrastructuresList.Add(infrastructureOperationSqlServer.InitializeAsync(cloudServiceDbServer));
+			cloudServiceDbServer.ResourceFile = new ResourceFile<IDatabaseServer>
+			{
+				Name = cloudServiceDbServer.Infrastructure.Name + "_SERVER.json",
+				Content = new MsSqlServer
+				{
+					Name = "MS SQL Server for Pre-Production Testing",
+					InstanceType = InstanceType.Large,
+					Memory = new Memory { Size = 64, SpaceSizeUnit = SizeUnit.GiB },
+					NetworkPerformance = Performance.High,
+					Storage = new Storage
+					{ Size = 100, SpaceSizeUnit = SizeUnit.GiB, VolumeType = VolumeType.Extension },
+					Vendor = "Microsoft",
+					Version = 2016
+				}
+			};
 
-		        Log.Logger.Information($"End of InitializeAsync method() of unit testing.");
+			var infrastructureOperationSqlServer = new InfrastructureOperation(
+				new FindInfrastructure(Log.Logger, @"C:\\GeeksCloudService"), Log.Logger);
 
-		        #endregion
+			Log.Logger.Information($"Begin of InitializeAsync method() of unit testing.");
 
-		        await Task.WhenAll(infrastructuresList);
-	        }
-	        catch (Exception exp)
-	        {
-		        Log.Logger.Error(exp,
-			        $"Error Initializing two infrastructures for the same provider.");
-		        throw;
-			}
-        }
+			infrastructuresList.Add(infrastructureOperationSqlServer.InitializeAsync(cloudServiceDbServer));
 
-        [Fact]
-        public async void Initialize_Two_Infrastructures_Different_Providers_Ok()
-        {
-	        try
-	        {
-		        Log.Logger.Information($"Begin of Initialize_Two_Infrastructures_Different_Providers_Ok()");
-		        Log.Logger.Information($"Construct CloudService VM.");
-		        var infrastructuresList = new List<Task>();
+			Log.Logger.Information($"End of InitializeAsync method() of unit testing.");
 
-		        #region cloudServiceVm
+			#endregion
 
-		        var cloudServiceVm = new CloudService<IVirtualMachine>
-		        {
-			        Provider = new Provider {Name = "IGS"},
-			        Infrastructure = new Infrastructure {Name = "UAT"},
-			        ResourceInstance = new ResourceInstance {Name = "Windows-Dev-VM"}
-		        };
+			await Task.WhenAll(infrastructuresList);
 
-		        cloudServiceVm.ResourceFile = new ResourceFile<IVirtualMachine>
-		        {
-			        Name = cloudServiceVm.Infrastructure.Name + "_SERVER.json",
-			        Content = new VirtualMachine
-			        {
-				        Name = "Windows Server 2016 R2 Dev. Virtual Machine",
-				        OperatingSystem = new WindowsOperatingSystem
-				        {
-					        Name = "Windows Server 2016 R2",
-					        Version = 10,
-					        Vendor = "Microsoft",
-					        Architecture = OperatingSystemArchitecture.SixtyFour
-				        },
-				        Storage = new Storage
-				        {
-					        Size = 100,
-					        SpaceSizeUnit = SizeUnit.GiB,
-					        VolumeType = VolumeType.Root
-				        },
-				        Processor = new Processor
-				        {
-					        Cores = 8,
-					        Speed = 260
-				        },
-				        Memory = new Memory
-				        {
-					        Size = 32,
-					        SpaceSizeUnit = SizeUnit.GiB
-				        },
-				        NetworkPerformance = Performance.High,
-				        InstanceType = InstanceType.Large,
-				        Tag = "Dev VM"
-			        }
-		        };
+		}
 
-		        Log.Logger.Information($"Begin of InitializeAsync method() of unit testing.");
-		        var infrastructureOperationVM = new InfrastructureOperation(
-			        new FindInfrastructure(Log.Logger, @"C:\\GeeksCloudService"), Log.Logger);
-		        Log.Logger.Information($"End of InitializeAsync method() of unit testing.");
+		[Fact]
+		public async void Initialize_Two_Infrastructures_Different_Providers_Ok()
+		{
+			Log.Logger.Information($"Begin of Initialize_Two_Infrastructures_Different_Providers_Ok()." +
+			                       $"{Environment.NewLine}Construct CloudService VM.");
 
-		        infrastructuresList.Add(infrastructureOperationVM.InitializeAsync(cloudServiceVm));
+			var infrastructuresList = new List<Task>();
 
-		        #endregion
+			#region cloudServiceVm
 
-		        #region cloudServiceDbServer
+			var cloudServiceVm = new CloudService<IVirtualMachine>
+			{
+				Provider = new Provider { Name = "IGS" },
+				Infrastructure = new Infrastructure { Name = "UAT" },
+				ResourceInstance = new ResourceInstance { Name = "Windows-Dev-VM" }
+			};
 
-		        Log.Logger.Information($"Construct CloudService Sql Server.");
-		        var cloudServiceDbServer = new CloudService<IDatabaseServer>
-		        {
-			        Provider = new Provider {Name = "SAMS"},
-			        Infrastructure = new Infrastructure {Name = "Test"},
-			        ResourceInstance = new ResourceInstance {Name = "SQL Server Test"}
-		        };
+			cloudServiceVm.ResourceFile = new ResourceFile<IVirtualMachine>
+			{
+				Name = cloudServiceVm.Infrastructure.Name + "_SERVER.json",
+				Content = new VirtualMachine
+				{
+					Name = "Windows Server 2016 R2 Dev. Virtual Machine",
+					OperatingSystem = new WindowsOperatingSystem
+					{
+						Name = "Windows Server 2016 R2",
+						Version = 10,
+						Vendor = "Microsoft",
+						Architecture = OperatingSystemArchitecture.SixtyFour
+					},
+					Storage = new Storage
+					{
+						Size = 100,
+						SpaceSizeUnit = SizeUnit.GiB,
+						VolumeType = VolumeType.Root
+					},
+					Processor = new Processor
+					{
+						Cores = 8,
+						Speed = 260
+					},
+					Memory = new Memory
+					{
+						Size = 32,
+						SpaceSizeUnit = SizeUnit.GiB
+					},
+					NetworkPerformance = Performance.High,
+					InstanceType = InstanceType.Large,
+					Tag = "Dev VM"
+				}
+			};
 
-		        cloudServiceDbServer.ResourceFile = new ResourceFile<IDatabaseServer>
-		        {
-			        Name = cloudServiceDbServer.Infrastructure.Name + "_SERVER.json",
-			        Content = new MsSqlServer
-			        {
-				        Name = "MS SQL Server for Pre-Production Testing",
-				        InstanceType = InstanceType.Large,
-				        Memory = new Memory {Size = 64, SpaceSizeUnit = SizeUnit.GiB},
-				        NetworkPerformance = Performance.High,
-				        Storage = new Storage
-					        {Size = 100, SpaceSizeUnit = SizeUnit.GiB, VolumeType = VolumeType.Extension},
-				        Vendor = "Microsoft",
-				        Version = 2016
-			        }
-		        };
+			Log.Logger.Information($"Begin of InitializeAsync method() of unit testing.");
+			var infrastructureOperationVM = new InfrastructureOperation(
+				new FindInfrastructure(Log.Logger, @"C:\\GeeksCloudService"), Log.Logger);
+			Log.Logger.Information($"End of InitializeAsync method() of unit testing.");
 
-		        var infrastructureOperationSqlServer = new InfrastructureOperation(
-			        new FindInfrastructure(Log.Logger, @"C:\\GeeksCloudService"), Log.Logger);
+			infrastructuresList.Add(infrastructureOperationVM.InitializeAsync(cloudServiceVm));
 
-		        Log.Logger.Information($"Begin of InitializeAsync method() of unit testing.");
-		        infrastructuresList.Add(infrastructureOperationSqlServer.InitializeAsync(cloudServiceDbServer));
-		        Log.Logger.Information($"End of InitializeAsync method() of unit testing.");
+			#endregion
 
-		        #endregion
+			#region cloudServiceDbServer
 
-		        await Task.WhenAll(infrastructuresList);
-	        }
-	        catch (Exception exp)
-	        {
-		        Log.Logger.Error(exp,
-			        $"Error Initializing two infrastructures for different providers.");
-		        throw;
-			}
-        }
+			Log.Logger.Information($"Construct CloudService Sql Server.");
+			var cloudServiceDbServer = new CloudService<IDatabaseServer>
+			{
+				Provider = new Provider { Name = "SAMS" },
+				Infrastructure = new Infrastructure { Name = "Test" },
+				ResourceInstance = new ResourceInstance { Name = "SQL Server Test" }
+			};
 
-        [Fact]
-        public async Task Load_Infrastructure_Ok()
-        {
-	        try
-	        {
-		        Log.Logger.Information($"Begin of Load_Infrastructure_Ok()");
+			cloudServiceDbServer.ResourceFile = new ResourceFile<IDatabaseServer>
+			{
+				Name = cloudServiceDbServer.Infrastructure.Name + "_SERVER.json",
+				Content = new MsSqlServer
+				{
+					Name = "MS SQL Server for Pre-Production Testing",
+					InstanceType = InstanceType.Large,
+					Memory = new Memory { Size = 64, SpaceSizeUnit = SizeUnit.GiB },
+					NetworkPerformance = Performance.High,
+					Storage = new Storage
+					{ Size = 100, SpaceSizeUnit = SizeUnit.GiB, VolumeType = VolumeType.Extension },
+					Vendor = "Microsoft",
+					Version = 2016
+				}
+			};
 
-		        var infrastructureContent = await infrastructureOperation.LoadAsync("UAT");
-		        await File.WriteAllTextAsync("C:\\uat.json", infrastructureContent.ToString());
+			var infrastructureOperationSqlServer = new InfrastructureOperation(
+				new FindInfrastructure(Log.Logger, @"C:\\GeeksCloudService"), Log.Logger);
 
-		        Log.Logger.Information($"End of Load_Infrastructure_Ok()");
-	        }
-	        catch (Exception exp)
-	        {
-		        Log.Logger.Error(exp,
-			        $"Error loading Infrastructure.");
-		        throw;
-			}
-        }
+			Log.Logger.Information($"Begin of InitializeAsync method() of unit testing.");
+			infrastructuresList.Add(infrastructureOperationSqlServer.InitializeAsync(cloudServiceDbServer));
+			Log.Logger.Information($"End of InitializeAsync method() of unit testing.");
 
-        [Fact]
-        public async Task Update_Infrastructure_Ok()
-        {
-	        try
-	        {
-		        Log.Logger.Information($"Begin of Update_Infrastructure_Ok()");
+			#endregion
 
-		        var updateModel = new UpdateResourceModel
-		        {
-			        InstanceType = InstanceType.XLarge,
-			        Memory = new Memory {Size = 100, SpaceSizeUnit = SizeUnit.GiB},
-			        NetworkPerformance = Performance.High,
-			        Processor = new Processor {Cores = 64, Speed = 300},
-			        Storage = new Storage {Size = 800, VolumeType = VolumeType.Extension},
-			        Tag = "New Dev Machine 2"
-		        };
+			await Task.WhenAll(infrastructuresList);
+		}
 
-		        Log.Logger.Information($"Begin of UpdateAsync()");
+		[Fact]
+		public async Task Load_Infrastructure_Ok()
+		{
+			Log.Logger.Information($"Begin of Load_Infrastructure_Ok()");
 
-		        await infrastructureOperation.UpdateAsync("UAT", updateModel);
+			var infrastructureContent = await infrastructureOperation.LoadAsync("UAT");
+			await File.WriteAllTextAsync("C:\\uat.json", infrastructureContent.ToString());
 
-		        Log.Logger.Information($"End of UpdateAsync()");
-	        }
-	        catch (Exception exp)
-	        {
-		        Log.Logger.Error(exp,
-			        $"Error updating Infrastructure.");
-		        throw;
+			Log.Logger.Information($"End of Load_Infrastructure_Ok()");
+		}
 
-			}
-        }
-    }
+		[Fact]
+		public async Task Update_Infrastructure_Ok()
+		{
+			Log.Logger.Information($"Begin of Update_Infrastructure_Ok()");
+
+			var updateModel = new UpdateResourceModel
+			{
+				InstanceType = InstanceType.XLarge,
+				Memory = new Memory { Size = 100, SpaceSizeUnit = SizeUnit.GiB },
+				NetworkPerformance = Performance.High,
+				Processor = new Processor { Cores = 64, Speed = 300 },
+				Storage = new Storage { Size = 800, VolumeType = VolumeType.Extension },
+				Tag = "New Dev Machine 2"
+			};
+
+			Log.Logger.Information($"Begin of UpdateAsync()");
+
+			await infrastructureOperation.UpdateAsync("UAT", updateModel);
+
+			Log.Logger.Information($"End of UpdateAsync()");
+		}
+	}
 }

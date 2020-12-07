@@ -8,48 +8,35 @@ using Xunit;
 
 namespace GeeksCloudLibraryXUnitTest
 {
-    public class CloudServiceUnitTest
-    {
-        private readonly ICloudServiceOperation cloudServiceOperation;
-        
-        public CloudServiceUnitTest()
-        {
-            Log.Logger = new LoggerConfiguration().
-	            WriteTo.
-	            File(@"C:\GeeksCloudService\CloudService_.log", rollingInterval: RollingInterval.Day).
-	            CreateLogger();
+	public class CloudServiceUnitTest
+	{
+		private readonly ICloudServiceOperation cloudServiceOperation;
 
-            cloudServiceOperation = new CloudServiceOperation(
-                new FindInfrastructure(Log.Logger, @"C:\\GeeksCloudService"),
-                Log.Logger);
-        }
+		public CloudServiceUnitTest()
+		{
+			Log.Logger = new LoggerConfiguration().
+				WriteTo.
+				File(@"C:\GeeksCloudService\CloudService_.log", rollingInterval: RollingInterval.Day).
+				CreateLogger();
 
-        [Fact]
-        public async Task Delete_Infrastructure_Ok()
-        {
-	        Log.Logger = new LoggerConfiguration().
-		        WriteTo.
-		        File(@"C:\GeeksCloudService\UnitTests-logs_.log", rollingInterval: RollingInterval.Day).
-		        CreateLogger();
+			cloudServiceOperation = new CloudServiceOperation(
+				new FindInfrastructure(Log.Logger, @"C:\\GeeksCloudService"),
+				Log.Logger);
+		}
 
-            try
-	        {
-		        Log.Logger.Information($"Begin of Delete_Infrastructure_Ok()");
+		[Fact]
+		public async Task Delete_Infrastructure_Ok()
+		{
+			Log.Logger = new LoggerConfiguration().
+				WriteTo.
+				File(@"C:\GeeksCloudService\UnitTests-logs_.log", rollingInterval: RollingInterval.Day).
+				CreateLogger();
 
-				await cloudServiceOperation.DeleteAsync("Test");
+			Log.Logger.Information($"Begin of Delete_Infrastructure_Ok()");
 
-				Log.Logger.Information($"End of Delete_Infrastructure_Ok()");
-			}
-	        catch (DirectoryNotFoundException directoryNotFoundExp)
-	        {
-		        Log.Logger.Error(directoryNotFoundExp, "Directory is not found to delete.");
-		        throw;
-	        }
-	        catch (Exception exp)
-	        {
-		        Log.Logger.Error(exp, "Error in deleting infrastructure.");
-                throw;
-	        }
-        }
-    }
+			await cloudServiceOperation.DeleteAsync("Test");
+
+			Log.Logger.Information($"End of Delete_Infrastructure_Ok()");
+		}
+	}
 }
