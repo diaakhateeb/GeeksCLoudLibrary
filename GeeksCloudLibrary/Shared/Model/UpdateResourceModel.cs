@@ -6,6 +6,9 @@ using GeeksCloudLibrary.Resource.Specs.Storage;
 
 namespace GeeksCloudLibrary.Shared.Model
 {
+    /// <summary>
+    /// Update resource Model.
+    /// </summary>
     public class UpdateResourceModel
     {
         public InstanceType InstanceType { get; set; }

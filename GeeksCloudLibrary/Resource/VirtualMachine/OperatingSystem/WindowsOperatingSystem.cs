@@ -3,6 +3,9 @@ using GeeksCloudLibrary.Resource.VirtualMachine.OperatingSystem.Interfaces;
 
 namespace GeeksCloudLibrary.Resource.VirtualMachine.OperatingSystem
 {
+    /// <summary>
+    /// Windows Operating System class.
+    /// </summary>
     public class WindowsOperatingSystem : IOperatingSystem
     {
         public int Version { get; set; }

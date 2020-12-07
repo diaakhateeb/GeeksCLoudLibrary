@@ -2,6 +2,9 @@
 
 namespace GeeksCloudLibrary.Resource.Specs.Memory.Interfaces
 {
+    /// <summary>
+    /// IMemory interface.
+    /// </summary>
     public interface IMemory
     {
         int Size { get; set; }

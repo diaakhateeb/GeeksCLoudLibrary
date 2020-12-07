@@ -45,7 +45,7 @@ namespace GeeksCloudLibraryXUnitTest
 		[Fact]
 		public async void Initialize_VirtualMachine_Infrastructure()
 		{
-			Log.Logger.Information($"Begin of Initialize_VirtualMachine_Infrastructure_Ok()." +
+			Log.Logger.Information($"Begin of Initialize_VirtualMachine_Infrastructure()." +
 			                       $"{Environment.NewLine}Construct CloudService VM.");
 			//Arrange
 			var cloudServiceVm = new CloudService<IVirtualMachine>
@@ -100,8 +100,6 @@ namespace GeeksCloudLibraryXUnitTest
 			await infrastructureOperationVm.InitializeAsync(cloudServiceVm);
 
 			Log.Logger.Information($"End of InitializeAsync method() of unit testing.");
-
-			//await Assert.ThrowsAnyAsync<Exception>(() => infrastructureOperationVm.InitializeAsync(cloudServiceVm));
 		}
 
 		[Fact]
@@ -147,7 +145,7 @@ namespace GeeksCloudLibraryXUnitTest
 		public async void Initialize_Two_Infrastructures_Same_Provider()
 		{
 
-			Log.Logger.Information($"Begin of Initialize_Two_Infrastructures_Same_Provider_Ok()." +
+			Log.Logger.Information($"Begin of Initialize_Two_Infrastructures_Same_Provider()." +
 			                       $"{Environment.NewLine}Construct CloudService VM.");
 
 			var infrastructuresList = new List<Task>();
@@ -251,7 +249,7 @@ namespace GeeksCloudLibraryXUnitTest
 		[Fact]
 		public async void Initialize_Two_Infrastructures_Different_Providers()
 		{
-			Log.Logger.Information($"Begin of Initialize_Two_Infrastructures_Different_Providers_Ok()." +
+			Log.Logger.Information($"Begin of Initialize_Two_Infrastructures_Different_Providers()." +
 			                       $"{Environment.NewLine}Construct CloudService VM.");
 
 			var infrastructuresList = new List<Task>();
@@ -348,20 +346,32 @@ namespace GeeksCloudLibraryXUnitTest
 		}
 
 		[Fact]
-		public async Task Load_Infrastructure()
+		public async Task Load_Infrastructure_Ok()
 		{
 			Log.Logger.Information($"Begin of Load_Infrastructure_Ok()");
 
-			var infrastructureContent = await infrastructureOperation.LoadAsync("UAT");
-			await File.WriteAllTextAsync("C:\\uat.json", infrastructureContent.ToString());
+			var infrastructureContent = await infrastructureOperation.LoadAsync("IGS","UAT");
+			await File.WriteAllTextAsync("C:\\UAT.json", infrastructureContent.ToString());
 
 			Log.Logger.Information($"End of Load_Infrastructure_Ok()");
 		}
 
 		[Fact]
+		public async Task Load_Infrastructure_Exception()
+		{
+			Log.Logger.Information($"Begin of Load_Infrastructure_Exception() unit test.");
+
+			var infrastructureContent = infrastructureOperation.LoadAsync("ABC", "UAT");
+			var exception = await Assert.ThrowsAnyAsync<Exception>(() => infrastructureContent);
+			Log.Error(exception, "Infrastructure does not exist.");
+
+			Log.Logger.Information($"End of Load_Infrastructure_Exception() unit test.");
+		}
+
+		[Fact]
 		public async Task Update_Infrastructure()
 		{
-			Log.Logger.Information($"Begin of Update_Infrastructure_Ok()");
+			Log.Logger.Information($"Begin of Update_Infrastructure()");
 
 			var updateModel = new UpdateResourceModel
 			{
@@ -375,7 +385,31 @@ namespace GeeksCloudLibraryXUnitTest
 
 			Log.Logger.Information($"Begin of UpdateAsync()");
 
-			await infrastructureOperation.UpdateAsync("UAT", updateModel);
+			await infrastructureOperation.UpdateAsync("IGS","UAT", updateModel);
+
+			Log.Logger.Information($"End of UpdateAsync()");
+		}
+		
+		[Fact]
+		public async Task Update_Infrastructure_Exception()
+		{
+			Log.Logger.Information($"Begin of Update_Infrastructure_Exception() unit test.");
+
+			var updateModel = new UpdateResourceModel
+			{
+				InstanceType = InstanceType.XLarge,
+				Memory = new Memory { Size = 100, SpaceSizeUnit = SizeUnit.GiB },
+				NetworkPerformance = Performance.High,
+				Processor = new Processor { Cores = 64, Speed = 300 },
+				Storage = new Storage { Size = 800, VolumeType = VolumeType.Extension },
+				Tag = "New Dev Machine 2"
+			};
+
+			Log.Logger.Information($"Begin of UpdateAsync()");
+
+			var updateTask = infrastructureOperation.UpdateAsync("ABC", "UAT", updateModel);
+			var exception = await Assert.ThrowsAnyAsync<Exception>(() => updateTask);
+			Log.Error(exception, "Error updating infrastructure.");
 
 			Log.Logger.Information($"End of UpdateAsync()");
 		}

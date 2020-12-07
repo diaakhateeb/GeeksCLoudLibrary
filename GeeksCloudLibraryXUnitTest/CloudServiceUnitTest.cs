@@ -4,6 +4,7 @@ using GeeksCloudLibrary.Operations;
 using GeeksCloudLibrary.Operations.Interfaces;
 using Serilog;
 using System.Threading.Tasks;
+using GeeksCloudLibrary.Providers;
 using Xunit;
 
 namespace GeeksCloudLibraryXUnitTest
@@ -19,7 +20,7 @@ namespace GeeksCloudLibraryXUnitTest
 				File(@"C:\GeeksCloudService\CloudService_.log", rollingInterval: RollingInterval.Day).
 				CreateLogger();
 
-			cloudServiceOperation = new CloudServiceOperation(
+			cloudServiceOperation = new CloudServiceOperation(new Provider{Name = "IGS"},
 				new FindInfrastructure(Log.Logger, @"C:\\GeeksCloudService"),
 				Log.Logger);
 		}
@@ -32,11 +33,11 @@ namespace GeeksCloudLibraryXUnitTest
 				File(@"C:\GeeksCloudService\UnitTests-logs_.log", rollingInterval: RollingInterval.Day).
 				CreateLogger();
 
-			Log.Logger.Information($"Begin of Delete_Infrastructure_Ok()");
+			Log.Logger.Information($"Begin of Delete_Infrastructure()");
 
 			await cloudServiceOperation.DeleteAsync("Test");
 
-			Log.Logger.Information($"End of Delete_Infrastructure_Ok()");
+			Log.Logger.Information($"End of Delete_Infrastructure()");
 		}
 	}
 }

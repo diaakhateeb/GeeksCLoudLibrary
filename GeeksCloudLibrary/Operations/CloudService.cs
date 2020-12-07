@@ -7,8 +7,7 @@ using GeeksCloudLibrary.ResourceInstance.Interfaces;
 
 namespace GeeksCloudLibrary.Operations
 {
-    [Serializable]
-    public class CloudService<T> : ICloudService<T>
+	public class CloudService<T> : ICloudService<T>
     {
         public IProvider Provider { get; set; }
         public IInfrastructure Infrastructure { get; set; }

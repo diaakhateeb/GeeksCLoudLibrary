@@ -5,6 +5,10 @@ using GeeksCloudLibrary.ResourceInstance.Interfaces;
 
 namespace GeeksCloudLibrary.Operations.Interfaces
 {
+    /// <summary>
+    /// ICloudService interface.
+    /// </summary>
+    /// <typeparam name="T">Infrastructure generic object type.</typeparam>
     public interface ICloudService<T>
     {
         IProvider Provider { get; set; }

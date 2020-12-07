@@ -6,6 +6,9 @@ using GeeksCloudLibrary.Resource.Specs.Storage.Interfaces;
 
 namespace GeeksCloudLibrary.Resource.DatabaseServer
 {
+    /// <summary>
+    /// MySQL Server class.
+    /// </summary>
     public class MySqlServer : IDatabaseServer
     {
         public string Name { get; set; }

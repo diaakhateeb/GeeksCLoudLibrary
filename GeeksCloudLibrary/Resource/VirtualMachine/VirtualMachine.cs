@@ -8,6 +8,9 @@ using GeeksCloudLibrary.Resource.VirtualMachine.OperatingSystem.Interfaces;
 
 namespace GeeksCloudLibrary.Resource.VirtualMachine
 {
+    /// <summary>
+    /// Creates VM class.
+    /// </summary>
     public class VirtualMachine : IVirtualMachine
     {
         public string Name { get; set; }

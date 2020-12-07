@@ -8,6 +8,9 @@ using GeeksCloudLibrary.Shared.Interfaces;
 
 namespace GeeksCloudLibrary.Resource.VirtualMachine.Interfaces
 {
+    /// <summary>
+    /// IVirtualMachine interface.
+    /// </summary>
     public interface IVirtualMachine : IResource
     {
         IOperatingSystem OperatingSystem { get; set; }

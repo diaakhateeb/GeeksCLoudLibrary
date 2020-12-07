@@ -25,18 +25,12 @@ namespace GeeksCloudLibrary.Operations
         {
 	        try
 	        {
-		        if (string.IsNullOrEmpty(await _findInfrastructure.FindInfrastructurePathAsync(cloudService.Infrastructure.Name)))
-		        {
-			        _logger.Error($"InitializeAsync() failed. Infrastructure with such name is already existed. {GetType().Name}.{nameof(InitializeAsync)}");
-			        throw new ApplicationException("InitializeAsync() failed. Infrastructure with such name is already existed.");
-		        }
-
-				await Task.Run(async () =>
+		        await Task.Run(async () =>
 		        {
 			        _logger.Information($"Begin of {nameof(InitializeAsync)} method.");
 
 			        if (!string.IsNullOrEmpty(
-				        await _findInfrastructure.FindInfrastructurePathAsync(cloudService.Infrastructure.Name)))
+				        await _findInfrastructure.FindInfrastructurePathAsync(cloudService.Provider.Name, cloudService.Infrastructure.Name)))
 			        {
 				        _logger.Error($"InitializeAsync() failed. Infrastructure with such name is already existed. {GetType().Name}.{nameof(InitializeAsync)}");
 				        throw new ApplicationException("InitializeAsync() failed. Infrastructure with such name is already existed.");
@@ -93,16 +87,16 @@ namespace GeeksCloudLibrary.Operations
 	        }
 		}
 
-        public async Task UpdateAsync(string infraName, UpdateResourceModel model)
+        public async Task UpdateAsync(string providerName, string infraName, UpdateResourceModel model)
         {
 	        try
 	        {
 		        _logger.Information($"Begin of {nameof(UpdateAsync)} method.");
 
 				var resourceFileOperation = new ResourceFileOperation(_logger);
-		        var deserializedJson = await LoadAsync(infraName);
+		        var deserializedJson = await LoadAsync(providerName, infraName);
 		        var newJsonContent = resourceFileOperation.UpdateResourceFile(deserializedJson, model);
-		        var infraJsonPath = await _findInfrastructure.FindInfrastructureJsonPathAsync(infraName);
+		        var infraJsonPath = await _findInfrastructure.FindInfrastructureJsonPathAsync(providerName, infraName);
 
 		        await File.WriteAllTextAsync(infraJsonPath, newJsonContent.ToString());
 
@@ -146,7 +140,7 @@ namespace GeeksCloudLibrary.Operations
 	        }
 		}
 
-        public async Task<JObject> LoadAsync(string infraName)
+        public async Task<JObject> LoadAsync(string providerName, string infraName)
         {
 	        try
 	        {
@@ -154,7 +148,7 @@ namespace GeeksCloudLibrary.Operations
 		        {
 			        _logger.Information($"Begin of {nameof(LoadAsync)} method.");
 
-			        var infraFullPath = await _findInfrastructure.FindInfrastructurePathAsync(infraName);
+			        var infraFullPath = await _findInfrastructure.FindInfrastructurePathAsync(providerName, infraName);
 			        var resourceFilePath = Directory.GetFiles(infraFullPath,
 				        "*.*", SearchOption.AllDirectories).FirstOrDefault();
 			        var jsonContent = await File.ReadAllTextAsync(resourceFilePath);
