@@ -15,15 +15,15 @@ namespace GeeksCloudLibrary.Operations
 
         public async Task DeleteAsync(string infraName)
         {
-            await Task.Run (async () =>
-             {
-                 var infraFullPath = await _findInfrastructure.FindInfrastructurePathAsync (infraName);
+            await Task.Run(async () =>
+            {
+                var infraFullPath = await _findInfrastructure.FindInfrastructurePathAsync(infraName);
 
-                 Parallel.ForEach (Directory.GetDirectories (infraFullPath), directory =>
-                 {
-                     Directory.Delete (directory, true);
-                 });
-             });
+                Parallel.ForEach(Directory.GetDirectories(infraFullPath), directory =>
+               {
+                   Directory.Delete(directory, true);
+               });
+            });
         }
     }
 }

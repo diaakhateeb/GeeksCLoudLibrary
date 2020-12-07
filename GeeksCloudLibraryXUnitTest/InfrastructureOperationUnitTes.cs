@@ -31,7 +31,8 @@ namespace GeeksCloudLibraryXUnitTest
 
         public InfrastructureOperationUnitTes()
         {
-            infrastructureOperation = new InfrastructureOperation(new FindInfrastructure());
+            infrastructureOperation = new InfrastructureOperation(
+                new FindInfrastructure(@"C:\\GeeksCloudService"));
             //new CloudService<IVirtualMachine>
             //{
             //    Infrastructure = new Infrastructure { Name = "UT" },
@@ -119,7 +120,8 @@ namespace GeeksCloudLibraryXUnitTest
                 }
             };
 
-            var infrastructureOperation1 = new InfrastructureOperation(new FindInfrastructure());
+            var infrastructureOperation1 = new InfrastructureOperation(
+                new FindInfrastructure(@"C:\\GeeksCloudService"));
 
             infrastructuresList.Add(infrastructureOperation1.InitializeAsync(co1));
             #endregion
@@ -147,7 +149,8 @@ namespace GeeksCloudLibraryXUnitTest
                 }
             };
 
-            var infrastructureOperation2 = new InfrastructureOperation(new FindInfrastructure());
+            var infrastructureOperation2 = new InfrastructureOperation(
+                new FindInfrastructure(@"C:\\GeeksCloudService"));
 
             infrastructuresList.Add(infrastructureOperation2.InitializeAsync(co2));
             #endregion
