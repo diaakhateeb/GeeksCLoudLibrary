@@ -6,7 +6,7 @@ The Cloud Service class library objective is to create a library for a company t
 The class library does provide interfaces for creating infrastructure resources. It has been developed using SOLID principles as much as it possible to provide clean code and architecture that can be expanded and scaled with high rate of readability and maintenance.
 
 ## - Interfaces
-The Cloud Service class library provides 14 interfaces that bring very high abstraction level.
+The Cloud Service class library provides 16 interfaces that bring very high abstraction level.
 
 - **IResource**: For all resources components.
 - **IResourceInstance**: For resource instance such as Virtual Machine and Database server.
@@ -15,3 +15,11 @@ The Cloud Service class library provides 14 interfaces that bring very high abst
  - **IProvider**: For Provider component.
  - **IVirtualMachine**: For resource instance type of virtual machine.
  - **IDatabaseServer**: For resource instance type of database server.
+ - **IOperatingSystem**: For the operating system that would be installed on the VM (Windows / Linux).
+ - **IMemory**: For the RAM specifications that would be allocated to the infrastructure resource instance.
+ - **IProcessor**: For the resource instance processor specifications.
+ - **IStorage**: For the resource instance storage size and volume.
+ - **ICloudService**: Provides all the needed infrastructure specifications that are required to create new cloud environment.
+ - **ICloudServiceOperation**: Provides independent deletion function to the infrastructure.
+ - **IFindInfrastructure**: Provides search functionality for the infrastructure.
+ - **IInfrastructureOperation**: Provides the main infrastructure cloud functions such as Initializing new cloud infrastructure, Update infrastructure and Load infrastructure specifications/configurations.
