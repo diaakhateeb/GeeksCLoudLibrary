@@ -67,7 +67,8 @@ namespace GeeksCloudLibraryXUnitTest
 						Name = "Windows Server 2016 R2",
 						Version = 10,
 						Vendor = "Microsoft",
-						Architecture = OperatingSystemArchitecture.SixtyFour
+						Architecture = OperatingSystemArchitecture.SixtyFour,
+						Applications = new List<string> { "MS Office", "Visual Studio", "Firefox", "IIS" }
 					},
 					Storage = new Storage
 					{
@@ -170,7 +171,8 @@ namespace GeeksCloudLibraryXUnitTest
 						Name = "Windows Server 2016 R2",
 						Version = 10,
 						Vendor = "Microsoft",
-						Architecture = OperatingSystemArchitecture.SixtyFour
+						Architecture = OperatingSystemArchitecture.SixtyFour,
+						Applications = new List<string> { "MS Office", "Visual Studio", "Firefox", "IIS" }
 					},
 					Storage = new Storage
 					{
@@ -274,7 +276,8 @@ namespace GeeksCloudLibraryXUnitTest
 						Name = "Windows Server 2016 R2",
 						Version = 10,
 						Vendor = "Microsoft",
-						Architecture = OperatingSystemArchitecture.SixtyFour
+						Architecture = OperatingSystemArchitecture.SixtyFour,
+						Applications = new List<string> { "MS Office", "Visual Studio", "Firefox", "IIS" }
 					},
 					Storage = new Storage
 					{
