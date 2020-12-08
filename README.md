@@ -9,24 +9,24 @@ The class library does provide interfaces for creating infrastructure resources.
 The Cloud Service class library provides 16 interfaces that bring very high abstraction level.
 
  - **[IResource](https://github.com/diaakhateeb/GeeksCloudLibrary/blob/master/GeeksCloudLibrary/Shared/Interfaces/IResource.cs)**: For all resources components.
- - **IResourceInstance**: For resource instance such as Virtual Machine and Database server.
- - **IResourceFile**: For infrastructure Json configuration file on the cloud. It has Content property where configurations get stored, loaded and updated.
- - **IInfrastructure**: For Infrastructure component.
- - **IProvider**: For Provider component.
- - **IVirtualMachine**: For resource instance type of virtual machine.
- - **IDatabaseServer**: For resource instance type of database server.
- - **IOperatingSystem**: For the operating system that would be installed on the VM (Windows / Linux).
- - **IMemory**: For the RAM specifications that would be allocated to the infrastructure resource instance.
- - **IProcessor**: For the resource instance processor specifications.
- - **IStorage**: For the resource instance storage size and volume.
- - **ICloudService**: Provides all the needed infrastructure specifications that are required to create new cloud environment.
- - **ICloudServiceOperation**: Provides independent deletion function to the infrastructure.
- - **IFindInfrastructure**: Provides search functionality for the infrastructure.
- - **IInfrastructureOperation**: Provides the main infrastructure cloud functions such as Initializing new cloud infrastructure, Update infrastructure and Load infrastructure specifications/configurations.
- - **IResourceFileOperation**: Provides Update function to the infrastructure configuration file (Json). This gives ability to change infrastructure on the cloud. For example, increasing/decreasing memory or disk space.
+ - **[IResourceInstance](https://github.com/diaakhateeb/GeeksCloudLibrary/blob/master/GeeksCloudLibrary/ResourceInstance/Interfaces/IResourceInstance.cs)**: For resource instance such as Virtual Machine and Database server.
+ - **[IResourceFile](https://github.com/diaakhateeb/GeeksCloudLibrary/blob/master/GeeksCloudLibrary/ResourceFile/Interfaces/IResourceFile.cs)**: For infrastructure Json configuration file on the cloud. It has Content property where configurations get stored, loaded and updated.
+ - **[IInfrastructure](https://github.com/diaakhateeb/GeeksCloudLibrary/blob/master/GeeksCloudLibrary/Infrastructure/Interfaces/IInfrastructure.cs)**: For Infrastructure component.
+ - **[IProvider](https://github.com/diaakhateeb/GeeksCloudLibrary/blob/master/GeeksCloudLibrary/Providers/Interfaces/IProvider.cs)**: For Provider component.
+ - **[IVirtualMachine](https://github.com/diaakhateeb/GeeksCloudLibrary/blob/master/GeeksCloudLibrary/Resource/VirtualMachine/Interfaces/IVirtualMachine.cs)**: For resource instance type of virtual machine.
+ - **[IDatabaseServer](https://github.com/diaakhateeb/GeeksCloudLibrary/blob/master/GeeksCloudLibrary/Resource/DatabaseServer/Interfaces/IDatabaseServer.cs)**: For resource instance type of database server.
+ - **[IOperatingSystem](https://github.com/diaakhateeb/GeeksCloudLibrary/blob/master/GeeksCloudLibrary/Resource/VirtualMachine/OperatingSystem/Interfaces/IOperatingSystem.cs)**: For the operating system that would be installed on the VM (Windows / Linux).
+ - **[IMemory](https://github.com/diaakhateeb/GeeksCloudLibrary/blob/master/GeeksCloudLibrary/Resource/Specs/Memory/Interfaces/IMemory.cs)**: For the RAM specifications that would be allocated to the infrastructure resource instance.
+ - **[IProcessor](https://github.com/diaakhateeb/GeeksCloudLibrary/blob/master/GeeksCloudLibrary/Resource/Specs/Processor/Interfaces/IProcessor.cs)**: For the resource instance processor specifications.
+ - **[IStorage](https://github.com/diaakhateeb/GeeksCloudLibrary/blob/master/GeeksCloudLibrary/Resource/Specs/Storage/Interfaces/IStorage.cs)**: For the resource instance storage size and volume.
+ - **[ICloudService](https://github.com/diaakhateeb/GeeksCloudLibrary/blob/master/GeeksCloudLibrary/Operations/Interfaces/ICloudService.cs)**: Provides all the needed infrastructure specifications that are required to create new cloud environment.
+ - **[ICloudServiceOperation](https://github.com/diaakhateeb/GeeksCloudLibrary/blob/master/GeeksCloudLibrary/Operations/Interfaces/ICloudServiceOperation.cs)**: Provides independent deletion function to the infrastructure.
+ - **[IFindInfrastructure](https://github.com/diaakhateeb/GeeksCloudLibrary/blob/master/GeeksCloudLibrary/Operations/Interfaces/IFindInfrastructure.cs)**: Provides search functionality for the infrastructure.
+ - **[IInfrastructureOperation](https://github.com/diaakhateeb/GeeksCloudLibrary/blob/master/GeeksCloudLibrary/Operations/Interfaces/IInfrastructureOperation.cs)**: Provides the main infrastructure cloud functions such as Initializing new cloud infrastructure, Update infrastructure and Load infrastructure specifications/configurations.
+ - **[IResourceFileOperation](https://github.com/diaakhateeb/GeeksCloudLibrary/blob/master/GeeksCloudLibrary/Operations/Interfaces/IResourceFileOperation.cs)**: Provides Update function to the infrastructure configuration file (Json). This gives ability to change infrastructure on the cloud. For example, increasing/decreasing memory or disk space.
 
  # Unit Testing
 There are 2 unit tests here:
 
- - **CloudServiceUnitTests**: It has a unit test for deleting infrastructure by providing infrastructure name.
- - **InfrastructureOperationUnitTests**: It has 8 unit tests that cover Initializing, Updating and Loading infrastructure.
+ - **[CloudServiceUnitTests](https://github.com/diaakhateeb/GeeksCloudLibrary/blob/master/GeeksCloudLibraryXUnitTest/CloudServiceUnitTests.cs)**: It has a unit test for deleting infrastructure by providing infrastructure name.
+ - **[InfrastructureOperationUnitTests](https://github.com/diaakhateeb/GeeksCloudLibrary/blob/master/GeeksCloudLibraryXUnitTest/InfrastructureOperationUnitTests.cs)**: It has 8 unit tests that cover Initializing, Updating and Loading infrastructure.
