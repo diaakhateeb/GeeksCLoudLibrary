@@ -8,9 +8,9 @@ The class library does provide interfaces for creating infrastructure resources.
 ## - Interfaces
 The Cloud Service class library provides 16 interfaces that bring very high abstraction level.
 
-- **IResource**: For all resources components.
-- **IResourceInstance**: For resource instance such as Virtual Machine and Database server.
-- **IResourceFile**: For infrastructure Json configuration file on the cloud. It has Content property where configurations get stored, loaded and updated.
+ - **IResource**: For all resources components.
+ - **IResourceInstance**: For resource instance such as Virtual Machine and Database server.
+ - **IResourceFile**: For infrastructure Json configuration file on the cloud. It has Content property where configurations get stored, loaded and updated.
  - **IInfrastructure**: For Infrastructure component.
  - **IProvider**: For Provider component.
  - **IVirtualMachine**: For resource instance type of virtual machine.
@@ -24,3 +24,9 @@ The Cloud Service class library provides 16 interfaces that bring very high abst
  - **IFindInfrastructure**: Provides search functionality for the infrastructure.
  - **IInfrastructureOperation**: Provides the main infrastructure cloud functions such as Initializing new cloud infrastructure, Update infrastructure and Load infrastructure specifications/configurations.
  - **IResourceFileOperation**: Provides Update function to the infrastructure configuration file (Json). This gives ability to change infrastructure on the cloud. For example, increasing/decreasing memory or disk space.
+
+ # Unit Testing
+There are 2 unit tests here:
+
+ - **CloudServiceUnitTests**: It has a unit test for deleting infrastructure by providing infrastructure name.
+ - **InfrastructureOperationUnitTests**: It has 8 unit tests that cover Initializing, Updating and Loading infrastructure.
