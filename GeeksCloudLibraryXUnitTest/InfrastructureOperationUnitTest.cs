@@ -27,11 +27,11 @@ using Xunit;
 
 namespace GeeksCloudLibraryXUnitTest
 {
-	public class InfrastructureOperationUnitTes
+	public class InfrastructureOperationUnitTest
 	{
 		private readonly IInfrastructureOperation infrastructureOperation;
 
-		public InfrastructureOperationUnitTes()
+		public InfrastructureOperationUnitTest()
 		{
 			Log.Logger = new LoggerConfiguration().
 				WriteTo.
