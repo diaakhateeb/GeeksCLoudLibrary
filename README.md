@@ -8,7 +8,7 @@ The class library does provide interfaces for creating infrastructure resources.
 ## - Interfaces
 The Cloud Service class library provides 16 interfaces that bring very high abstraction level.
 
- - **IResource**: For all resources components.
+ - **[IResource](https://github.com/diaakhateeb/GeeksCloudLibrary/blob/master/GeeksCloudLibrary/Shared/Interfaces/IResource.cs)**: For all resources components.
  - **IResourceInstance**: For resource instance such as Virtual Machine and Database server.
  - **IResourceFile**: For infrastructure Json configuration file on the cloud. It has Content property where configurations get stored, loaded and updated.
  - **IInfrastructure**: For Infrastructure component.
