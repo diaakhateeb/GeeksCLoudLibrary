@@ -9,11 +9,11 @@ using Xunit;
 
 namespace GeeksCloudLibraryXUnitTest
 {
-	public class CloudServiceUnitTest
+	public class CloudServiceUnitTests
 	{
 		private readonly ICloudServiceOperation cloudServiceOperation;
 
-		public CloudServiceUnitTest()
+		public CloudServiceUnitTests()
 		{
 			Log.Logger = new LoggerConfiguration().
 				WriteTo.
