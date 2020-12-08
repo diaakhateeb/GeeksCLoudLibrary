@@ -23,3 +23,4 @@ The Cloud Service class library provides 16 interfaces that bring very high abst
  - **ICloudServiceOperation**: Provides independent deletion function to the infrastructure.
  - **IFindInfrastructure**: Provides search functionality for the infrastructure.
  - **IInfrastructureOperation**: Provides the main infrastructure cloud functions such as Initializing new cloud infrastructure, Update infrastructure and Load infrastructure specifications/configurations.
+ - **IResourceFileOperation**: Provides Update function to the infrastructure configuration file (Json). This gives ability to change infrastructure on the cloud. For example, increasing/decreasing memory or disk space.
