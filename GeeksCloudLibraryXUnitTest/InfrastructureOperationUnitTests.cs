@@ -349,14 +349,14 @@ namespace GeeksCloudLibraryXUnitTest
 		}
 
 		[Fact]
-		public async Task Load_Infrastructure_Ok()
+		public async Task Load_Infrastructure()
 		{
-			Log.Logger.Information($"Begin of Load_Infrastructure_Ok()");
+			Log.Logger.Information($"Begin of Load_Infrastructure()");
 
 			var infrastructureContent = await infrastructureOperation.LoadAsync("IGS","UAT");
 			await File.WriteAllTextAsync("C:\\UAT.json", infrastructureContent.ToString());
 
-			Log.Logger.Information($"End of Load_Infrastructure_Ok()");
+			Log.Logger.Information($"End of Load_Infrastructure()");
 		}
 
 		[Fact]
